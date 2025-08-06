@@ -30,11 +30,22 @@ public class NewsCategoryController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(EM_NewsCategory model)
     {
-        // không có đăng nhập nên cho nó mặc định là 0
+      
         var createdBy = 0; 
         var res = await _s_NewsCategory.Create(default, model, createdBy.ToString());
         return Json(res);
     }
+    [HttpPost]
+    public async Task<IActionResult> UpdateStatus(int id)
+    {
+        var updatedBy = 0;
+        var result = await _s_NewsCategory.UpdateStatus(default, id, 0, updatedBy.ToString());
+        return Json(new { success = result != null});
+    }
+
+
+
+
 
 
 

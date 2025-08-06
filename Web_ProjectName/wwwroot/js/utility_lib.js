@@ -3,6 +3,7 @@ const ACCEPT_EXTENSION_IMAGE_FILE = ".png,.jpg,.jpeg";
 const MAX_IMAGE_FILE = 5;
 const MAX_VALUE_INT32 = 2147483647;
 
+
 //Declare icon html
 var _loadAnimationSmallHtml =
     `<div class="preloader-wrapper xs btn_search active">
@@ -115,20 +116,6 @@ var _imageErrorUrl = {
     notFound: '<div class="text-center"><img src="/images/notFound.png"></div>',
 };
 
-//var _languageDataTalbeObj = {
-//    emptyTable: _dataTableResource.EmptyTable,
-//    //lengthMenu: '<div class="dataTables_length" id="main_table_length"><label>' + "Hiển thị" + ' <select name="main_table_length" aria-controls="main_table" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="15">15</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">' + _dataTableResource.All + '</option></select> ' + _dataTableResource.Entries + '</label></div>',
-//    search: _dataTableResource.Search,
-//    paginate: {
-//        first: _dataTableResource.First,
-//        last: _dataTableResource.Last,
-//        next: _dataTableResource.Next,
-//        previous: _dataTableResource.Previous
-//    },
-//    loadingRecords: _dataTableResource.LoadingRecords,
-//    zeroRecords: _dataTableResource.ZeroRecords,
-//    info: _dataTableResource.Showing + " _START_ " + _dataTableResource.To + " _END_ " + _dataTableResource.Of + " _TOTAL_ " + _dataTableResource.Entries
-//};
 
 //Declare current page
 var _currentPageUrl = location.pathname.split("/")[1] + "/" + location.pathname.split("/")[2];;
@@ -298,13 +285,13 @@ function ShowToastNoti(type, title, message, timeout = 2000, position = 'topRigh
     switch (type) {
         case 'success': icon = '<i class="iziToast-icon ico-success revealIn"></i>'; color = 'green';
             audio = document.getElementById('audio_success'); audio.volume = 0.2; break;
-        //var audio = new Audio('/sounds/sound1.ogg'); audio.volume = 0.2; audio.play(); break;
+            //var audio = new Audio('/sounds/sound1.ogg'); audio.volume = 0.2; audio.play(); break;
         case 'warning': icon = '<i class="iziToast-icon ico-warning revealIn"></i>'; color = 'orange';
             audio = document.getElementById('audio_warning'); audio.volume = 1; break;
         //var audio = new Audio('/sounds/sound6.ogg'); audio.volume = 0.8; audio.play(); break;
         case 'error': icon = '<i class="iziToast-icon ico-error revealIn"></i>'; color = 'red';
             audio = document.getElementById('audio_error'); audio.volume = 0.4; break;
-        //var audio = new Audio('/sounds/sound5.ogg'); audio.volume = 0.4; audio.play(); break;
+            //var audio = new Audio('/sounds/sound5.ogg'); audio.volume = 0.4; audio.play(); break;
         case 'info': icon = '<i class="iziToast-icon ico-info revealIn"></i>'; color = 'blue';
             audio = document.getElementById('audio_info'); audio.volume = 0.4; break;
         //var audio = new Audio('/sounds/sound7.ogg'); audio.volume = 0.4; audio.play(); break;
@@ -437,9 +424,6 @@ function BackToTable(elmShow = '#div_main_table', elmHide = '#div_view_panel') {
     $('.dataTables_scrollHeadInner table').css('width', '100%');
     $('.dataTables_scrollFootInner table').css('width', '100%');
     $(elmHide).find('.navbar_title').removeClass('active');
-    //setTimeout(function () {
-    //    $('#div_view_panel').html('');
-    //}, 200);
 }
 
 //Show overlay
@@ -863,11 +847,7 @@ function clearDiv(id) {
 function CheckValidationUnobtrusive(formElm) {
     $.validator.unobtrusive.parse(formElm);
     formElm.validate();
-    //$.each(formElm.validate().errorList, function (key, value) {
-    //    $errorSpan = formElm.find(`span[data-valmsg-for="${value.element.id}"]`);
-    //    $errorSpan.html(`<span>${value.message}</span>`);
-    //    $errorSpan.show();
-    //});
+    
     return formElm.valid();
 }
 

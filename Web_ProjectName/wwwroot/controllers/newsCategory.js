@@ -1,80 +1,128 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
+    const table = initNewsCategoryTable();
+
+    bindFormToggleEvents();
+    bindCreateFormSubmit(table);
+    bindDeleteNewsCategoryEvent(table);
+    bindEditNewsCategoryEvent(table);
+});
+
+function initNewsCategoryTable() {
     const status = 1;
-    $.ajax({
-        url: '/NewsCategory/GetList?status=' + status,
-        type: 'GET',
-        dataType: 'json',
-        success: function (res) {
-    
+    $.fn.dataTable.ext.errMode = 'none';
 
-            if (!res || res.isSuccess === false) {
-                const errorMessage = res && res.message ? res.message : "Không thể lấy dữ liệu từ hệ thống.";
-                return showError(errorMessage);
+    return $('#newsCategoryTable').DataTable({
+        ajax: {
+            url: '/NewsCategory/GetList?status=' + status,
+            dataSrc: function (json) {
+                if (!json || json.isSuccess === false || !Array.isArray(json.data)) {
+                    console.warn("API trả lỗi hoặc dữ liệu sai:", json?.message || json);
+                    return [];
+                }
+                return json.data;
+            },
+            error: function (xhr, status, error) {
+                console.error("Lỗi AJAX:", error);
+                ShowToastNoti('warning', '', 'Lỗi không kết nối tới máy chủ!');
             }
-
-            const data = res.data;
-            let html = '';
-
-            if (!Array.isArray(data) || data.length === 0) {
-                html = '<tr><td colspan="4">Không có dữ liệu.</td></tr>';
-            } else {
-                data.forEach(item => {
-                    html += `
-                        <tr>
-                            <td>${item.name || ''}</td>
-                            <td>${item.nameSlug || ''}</td>
-                            <td>${item.status === 1 ? 'Hiện' : 'Ẩn'}</td>
-                            <td>${item.sort ?? ''}</td>
-                            <td>${item.remark ?? ''}</td>
-                        </tr>
+        },
+        columns: [
+            { data: 'name' },
+            { data: 'nameSlug' },
+            { data: 'remark' },
+            {
+                data: null,
+                title: 'Hành động',
+                orderable: false,
+                render: function (data, type, row) {
+                    return `
+                        <button class="btn btn-sm btn-warning btn-edit" data-id="${row.id}" title="Chỉnh sửa">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger btn-delete" data-id="${row.id}" title="Xoá">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
                     `;
-                });
-            }
-
-            $('#newsCategoryTable tbody').html(html);
+                }
+            },
+        ],
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/vi.json'
         },
-        error: function (xhr, status, error) {
-            console.error("Lỗi AJAX:", error);
-            showError("Không thể kết nối đến máy chủ.");
-        }
+        processing: true,
+        serverSide: false,
+        responsive: true
+    });
+}
+
+function bindFormToggleEvents() {
+    $('#btnToggleForm').click(function () {
+        $('#newsCategoryTable_wrapper').hide();
+        $('#createFormContainer').slideDown();
     });
 
-    function showError(message) {
-        $('#newsCategoryTable tbody').html(`
-            <tr>
-                <td colspan="4" style="color:red;">${message}</td>
-            </tr>
-        `);
-    }
-});
+    $(document).on('click', '#btnCancelCreate', function () {
+        $('#createFormContainer').slideUp();
+        $('#newsCategoryTable_wrapper').show();
+    });
+}
 
-//Create NewsCategory
+function bindCreateFormSubmit(table) {
+    $('#formCreateNewsCategory').submit(function (e) {
+        e.preventDefault();
 
-$('#btnCreate').click(function () {
-    var model = {
-        name: $('#Name').val(),
-        remark: $('#Remark').val(),
-        nameSlug: $('#NameSlug').val(),
-        status: $('#Status').val()
-    };
+        const model = {
+            name: $('#Name').val(),
+            remark: $('#Remark').val(),
+            status: $('#Status').val()
+        };
 
-    $.ajax({
-        url: '/NewsCategory/Create',
-        type: 'POST',
-        data: model,
-        success: function (res) {
-            if (res.result === 1) {
-                alert( res.error?.message || "Tạo thành công!");
-                location.href = '/NewsCategory'; 
-            } else {
-                alert("Tạo thất bại: " + (res.error?.message || "Không rõ lỗi"));
+        $.ajax({
+            url: '/NewsCategory/Create',
+            type: 'POST',
+            data: model,
+            success: function (res) {
+                if (res.result === 1) {
+                    ShowToastNoti('success', '', 'Tạo thành công!');
+                    $('#formCreateNewsCategory')[0].reset();
+                    table.ajax.reload(null, false);
+                    $('#createFormContainer').slideUp();
+                    $('#newsCategoryTable_wrapper').show();
+                } else {
+                    ShowToastNoti('warning', '', 'Tạo thất bại!');
+                }
+            },
+            error: function () {
+                ShowToastNoti('warning', '', 'Lỗi khi gọi API!');
             }
-        },
-        error: function (err) {
-            alert("Lỗi khi gọi API!");
-            console.log(err);
+        });
+    });
+}
+
+function bindDeleteNewsCategoryEvent(table) {
+    $('#newsCategoryTable').on('click', '.btn-delete', function () {
+        const id = $(this).data('id');
+
+        if (confirm("Bạn có chắc chắn muốn xoá danh mục này không?")) {
+            $.ajax({
+                url: '/NewsCategory/UpdateStatus',
+                type: 'POST',
+                data: { id: id },
+                success: function (res) {
+                    if (res.success) {
+                        ShowToastNoti('success', '', 'Xoá thành công!');
+                        table.ajax.reload(null, false);
+                    } else {
+                        ShowToastNoti('warning', '', 'Xoá thất bại!');
+                    }
+                },
+                error: function () {
+                    ShowToastNoti('warning', '', 'Đã xảy ra lỗi khi xoá.');
+                }
+            });
         }
     });
-});
+}
 
 

@@ -1,24 +1,39 @@
 ﻿@{
-    ViewBag.Title = "Danh sách danh mục theo trạng thái";
+    ViewBag.Title = "Danh mục tin tức";
 }
 
 <h2>Danh mục tin tức</h2>
 
-<table id="newsCategoryTable" class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Tên danh mục</th>
-            <th>Slug</th>
-            <th>Trạng thái</th>
-            <th>Sort</th>
-            <th>Ghi chú</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+<button id="btnToggleForm" class="btn btn-primary mb-3">Thêm mới</button>
+<div id="createFormContainer" style="display: none;">
+    <partial name="_P_Create" />
+</div>
+
+<div id="dataTableContainer">
+    <table id="newsCategoryTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Tên danh mục</th>
+                <th>Slug</th>
+                <th>Ghi chú</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/izi-toast-mater/css/izitoast.min.css" rel="stylesheet" />
+    <link href="~/lib/izi-toast-mater/css/izitoast.css" rel="stylesheet" />
+}
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="~/controllers/newsCategory.js" asp-append-version="true"></script>
+    <script src="~/js/utility_lib.js"></script>
+    <script src="~/lib/izi-toast-mater/js/izitoast.min.js"></script>
+    <script src="~/lib/izi-toast-mater/js/izitoast.js"></script>
 }
