@@ -1,0 +1,207 @@
+﻿@{
+    System.Globalization.CultureInfo cul = System.Globalization.CultureInfo.GetCultureInfo("en-US");
+    var breadCrumb = ViewBag.BreadCrumb as VM_BreadCrumb;
+    // var productCategoryMenu = ViewBag.MenuProductCategory as List<M_ProductCategory>;
+    var productHot = ViewBag.ProductHot as List<M_Product>;
+    var banner = ViewBag.Banner as M_Banner_CustomFullLocation;
+    var productCategoryMenu = new List<M_ProductCategory_WithCountProduct>();
+}
+
+
+@section Styles {
+    <link href="~/css/portal/product_list.css" rel="stylesheet" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/controllers/portal/product.js" asp-append-version="true"></script>
+}
+<input type="hidden" id="input_category" value="@ViewBag.category" />
+<input type="hidden" id="input_record" value="@ViewBag.record" />
+<input type="hidden" id="input_page" value="@ViewBag.page" />
+
+
+
+<section class="wrapper bg-light">
+    <div class="container pb-10 pb-md-14 pt-4 pt-md-8">
+        <div class="row gy-10">
+            <div class="col-lg-9 order-lg-2">
+                <div class="row align-items-center mb-10 position-relative zindex-1">
+                    <div class="col">
+                        @*@if (ViewBag.keyword != null)
+                        {
+                        <h2 class="display-6 mb-1">@ViewBag.keyword <a href="javascript:void(0)" onclick="ClearSearchKeyword(this)"><i class="uil uil-x"></i></a></h2>
+                        }*@
+                        <p class="mb-0 text-muted sp-line-1 count_record"></p>
+                    </div>
+                    <div class="col-md-5 col-xl-4 mt-5 mt-md-0">
+                        <form class="search-form" id="form_search_main">
+                            <div class="form-floating mb-0">
+                                <input type="text" id="input_keyword" class="form-control" placeholder="Nhập từ khóa" maxlength="100" value="@ViewBag.keyword">
+                                <label for="search-form">Tìm kiếm</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-5 col-xl-4 ms-md-auto text-md-end mt-5 mt-md-0">
+                        <div class="form-select-wrapper">
+                            <select class="form-select" id="select_type_search" asp-items="ViewBag.TypeProduct"></select>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <aside class="col-lg-3 sidebar">
+                <div class="widget mt-1">
+                    @if (productCategoryMenu.Any())
+                    {
+                        <div class="accordion accordion-wrapper product_category_left_menu" id="accordionSimpleExample">
+                            <div class="card plain accordion-item">
+                                <div class="card-header" id="headingSimpleOne">
+                                    <button class="accordion-button widget-title text-uppercase text-orange" data-bs-toggle="collapse" data-bs-target="#collapseSimpleOne" aria-expanded="true" aria-controls="collapseSimpleOne"> Danh mục sản phẩm <i class="uil uil-filter ms-1"></i></button>
+                                </div>
+                                <div id="collapseSimpleOne" class="accordion-collapse collapse show" aria-labelledby="headingSimpleOne" data-bs-parent="#accordionSimpleExample">
+                                    <div>
+                                        @foreach (var item in productCategoryMenu)
+                                        {
+                                            <div class="form-check ps-0 mb-1">
+                                                <input class="form-check-input input_checkbox_product_category_search" type="checkbox" value="@item.id" id="input_checkbox_product_category_search_@item.id">
+                                                <label class="form-check-label fw-bold" for="input_checkbox_product_category_search_@item.id">
+                                                    @if (!string.IsNullOrEmpty(item.imageUrl))
+                                                    {
+                                                        <img src="@item.imageUrl" class="img_product_category_leftmenu" alt="@item.name" />
+                                                    }
+                                                    @item.name <span class="fs-sm text-muted ms-1">(@item.countProduct)</span>
+                                                </label>
+                                            </div>
+                                            if (item.children.Count() > 0)
+                                            {
+                                                foreach (var chilren2 in item.children)
+                                                {
+                                                    <div class="form-check ps-0 mb-1 ms-6">
+                                                        <input class="form-check-input input_checkbox_product_category_search" type="checkbox" value="@chilren2.id" id="input_checkbox_product_category_search_@chilren2.id">
+                                                        <label class="form-check-label menu_level_2" for="input_checkbox_product_category_search_@chilren2.id">
+                                                            @if (!string.IsNullOrEmpty(chilren2.imageUrl))
+                                                            {
+                                                                <img src="@chilren2.imageUrl" class="img_product_category_leftmenu" alt="@chilren2.name" />
+                                                            }
+                                                            @chilren2.name <span class="fs-sm text-muted ms-1">(@chilren2.countProduct)</span>
+                                                        </label>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @if (productHot.Any())
+                {
+                    <div class="widget">
+                        <h4 class="widget-title mb-3 text-uppercase">Sản phẩm <mark class="text-orange">nổi bật</mark></h4>
+                        <ul class="image-list">
+                            @foreach (var item in productHot)
+                            {
+                                <li>
+                                    <figure class="rounded"><a href="/san-pham/@item.metaUrl"><img loading="lazy" class="image_product" src="@(string.IsNullOrEmpty(item.imageObj?.smallUrl) ? "/images/error-avatar.png" : item.imageObj?.smallUrl)" alt="@item.name"></a></figure>
+                                    <div class="post-content">
+                                        <h6 class="mb-2" data-toggle="tooltip" data-placement="top" title="@item.name"><a class="link-dark sp-line-2" href="/san-pham/@item.metaUrl">@item.name</a></h6>
+                                        <ul class="post-meta">
+                                            <li class="price">
+                                                @if (item.discount > 0)
+                                                {
+                                                    <ins><span class="amount">@item.discount?.ToString("#,###", cul.NumberFormat)đ</span></ins>
+                                                    <span class="small ms-1 text-muted"><del>@item.price?.ToString("#,###", cul.NumberFormat)đ</del></span>
+                                                }
+                                                else if (item.price > 0)
+                                                {
+                                                    <span>@item.price?.ToString("#,###", cul.NumberFormat)đ</span>
+                                                }
+                                                else
+                                                {
+                                         
+                                                }
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+                @if (banner?.bottomObjs != null && banner.bottomObjs.Any())
+                {
+                    <div class="widget mt-10">
+                        <div class="swiper-container dots-over" data-effect="" data-margin="5" data-autoplay="true" data-autoplaytime="6000" data-dots="true" data-nav="false" data-autoheight="true">
+                            <div class="swiper">
+                                <div class="swiper-wrapper">
+                                    @foreach (var item in banner.bottomObjs)
+                                    {
+                                        string alignText = "";
+                                        string alignTextVideo = "";
+                                        switch (item.align)
+                                        {
+                                            case "left":
+                                                alignText = "justify-content-start";
+                                                alignTextVideo = "text-start";
+                                                break;
+                                            case "center":
+                                                alignText = "justify-content-center";
+                                                alignTextVideo = "text-center";
+                                                break;
+                                            case "right":
+                                                alignText = "justify-content-end";
+                                                alignTextVideo = "text-end";
+                                                break;
+                                            default: break;
+                                        }
+                                        <div class="swiper-slide bg-overlay bg-overlay-100 rounded">
+                                            <img src="@item.fileUrl" alt="@item.title" class="w-100" />
+                                            @if (!string.IsNullOrEmpty(item.url))
+                                            {
+                                                switch (item.urlType)
+                                                {
+                                                    case EN_BannerUrlType.Link:
+                                                        <a href="@item.url" target="@item.urlTarget" rel="noreferrer">
+                                                            <div class="caption-wrapper p-2 @alignText">
+                                                                <div class="caption bg-white rounded mt-auto animate__animated animate__slideInDown animate__delay-1s  flex-column">
+                                                                    <p class="mb-0 px-2 text-dark">@item.title</p>
+                                                                    <p class="mb-0 px-2 text-dark small">@item.description</p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                        break;
+                                                    case EN_BannerUrlType.Youtube:
+                                                        <div class="caption-wrapper p-2 flex-column">
+                                                            <div class="caption rounded px-2 py-2 mt-auto animate__animated animate__slideInDown animate__delay-1s"><a href="@item.url" target="@item.urlTarget" rel="noreferrer" class="btn btn-circle btn-white btn-play ripple mx-auto mb-5" aria-label="Xem" data-gallery="banner-mid" @(item.urlTarget == "_self" ? "data-glightbox" : "")><i class="icn-caret-right"></i></a></div>
+                                                            <div class="@alignTextVideo caption bg-white rounded mt-auto animate__animated animate__slideInDown animate__delay-1s flex-column">
+                                                                <p class="mb-0 px-2 text-dark">@item.title</p>
+                                                                <p class="mb-0 px-2 text-dark small">@item.description</p>
+                                                            </div>
+                                                        </div>
+                                                        break;
+                                                    default: break;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="caption-wrapper p-2 @alignText" @(string.IsNullOrEmpty(item.title) && string.IsNullOrEmpty(item.description) ? "hidden" : "")>
+                                                    <div class="caption bg-white rounded px-2 py-2 mt-auto animate__animated animate__slideInDown animate__delay-1s  flex-column">
+                                                        <p class="mb-0 px-2 text-dark">@item.title</p>
+                                                        <p class="mb-0 px-2 text-dark small">@item.description</p>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </aside>
+        </div>
+    </div>
+</section>

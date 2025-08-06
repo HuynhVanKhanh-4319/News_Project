@@ -1,0 +1,53 @@
+﻿@model EM_Contact
+
+<form id="form_data_contact" class="needs-validation" novalidate asp-antiforgery="true">
+    <input type="hidden" asp-for="productId" >
+    <input type="hidden" name="tokenReCAPTCHA" class="tokenReCAPTCHA" />
+    <div class="messages"></div>
+    <div class="row gx-4">
+        <div class="col-md-6">
+            <div class="form-floating mb-4">
+                <input asp-for="name" class="form-control" placeholder="Nhập tên của bạn" required>
+                <label asp-for="name">Tên (*)</label>
+                <div class="valid-feedback"> OK! </div>
+                <div class="invalid-feedback"> Vui lòng nhập tên. </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating mb-4">
+                <input asp-for="phone" class="form-control" placeholder="Nhập điện thoại" required>
+                <label asp-for="phone">Điện thoại (*)</label>
+                <div class="valid-feedback"> OK! </div>
+                <div class="invalid-feedback"> Vui lòng nhập điện thoại. </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating mb-4">
+                <input type="email" asp-for="email" class="form-control" placeholder="Nhập email">
+                <label asp-for="email">Email</label>
+                <div class="valid-feedback"> OK! </div>
+                <div class="invalid-feedback"> Vui lòng nhập email hợp lệ. </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating mb-4">
+                <input asp-for="title" class="form-control" placeholder="Nhập tiêu đề">
+                <label asp-for="title">Tiêu đề</label>
+                <div class="valid-feedback"> OK! </div>
+                <div class="invalid-feedback"> Vui lòng nhập tiêu đề. </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-floating mb-4">
+                <textarea asp-for="detail" class="form-control" placeholder="Nhập nội dung" style="height: 150px" required></textarea>
+                <label asp-for="detail">Nội dung (*)</label>
+                <div class="valid-feedback"> OK! </div>
+                <div class="invalid-feedback"> Vui lòng nhập nội dung. </div>
+            </div>
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary rounded-pill btn-send mb-3" data-style="zoom-in" style="width:200px;">Gửi</button>
+            <p class="text-muted"><strong>*</strong> Các trường có dấu sao (*) là bắt buộc.</p>
+        </div>
+    </div>
+</form>

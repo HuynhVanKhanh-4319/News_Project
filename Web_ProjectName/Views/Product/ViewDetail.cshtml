@@ -1,0 +1,311 @@
+﻿@model M_Product
+
+@{
+    System.Globalization.CultureInfo cul = System.Globalization.CultureInfo.GetCultureInfo("en-US");
+    var breadCrumb = ViewBag.BreadCrumb as VM_BreadCrumb;
+    var menuProductCategory = ViewBag.MenuProductCategory as List<M_ProductCategory>;
+    var productHot = ViewBag.ProductHot as List<M_Product>;
+    var productRelated = ViewBag.ProductRelated as List<M_Product>;
+    List<string> imageList = string.IsNullOrEmpty(Model.imageList) ? new List<string>() : Model.imageList.Split('|').ToList();
+    var supplierInfo = ViewBag.SupplierInfo as M_Supplier;
+    int countCatalogue = ViewBag.CountCatalogue;
+    bool allowCatalogue = ViewBag.AllowCatalogue;
+}
+
+@section Styles {
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" media="print" onload="this.media='all'" />
+}
+
+@section Scripts {
+    <partial name="_P_ReCAPTCHAVertify" />
+    <partial name="_P_ValidationScripts" />
+    <script src="~/lib/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js" defer></script>
+    <script src="~/controllers/portal/product_detail.js" asp-append-version="true"></script>
+}
+
+@* <partial name="_P_BreadCrumbPortal" model="breadCrumb" /> *@
+
+<section class="wrapper bg-light">
+    <div class="container py-14 py-md-16">
+        <div class="row gx-md-8 gx-xl-12 gy-8">
+            @if (!string.IsNullOrEmpty(Model.imageObj?.relativeUrl) || imageList.Count() > 0)
+            {
+                <div class="col-lg-6">
+                    <div class="swiper-container swiper-thumbs-container dots-over" data-margin="10" data-dots="false" data-nav="true" data-thumbs="true">
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                @if (!string.IsNullOrEmpty(Model.imageObj?.relativeUrl))
+                                {
+                                    <div class="swiper-slide">
+                                        <figure class="rounded"><img class="image_product" src="@Model.imageObj?.relativeUrl" srcset="@Model.imageObj?.relativeUrl 2x" alt="@Model.name" /><a class="item-link swiper-no-swiping" href="@Model.imageObj?.relativeUrl" data-glightbox data-gallery="product-group"><i class="uil uil-focus-add"></i></a></figure>
+                                    </div>
+                                }
+                                @if (imageList.Count() > 0)
+                                {
+                                    for (int i = 0; i < imageList.Count(); i++)
+                                    {
+                                        <div class="swiper-slide">
+                                            <figure class="rounded"><img class="image_product" src="@imageList[i]" srcset="@imageList[i] 2x" alt="@Model.name" /><a class="item-link swiper-no-swiping" href="@imageList[i]" data-glightbox data-gallery="product-group"><i class="uil uil-focus-add"></i></a></figure>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="swiper swiper-thumbs">
+                            <div class="swiper-wrapper">
+                                @if (!string.IsNullOrEmpty(Model.imageObj?.mediumUrl))
+                                {
+                                    <div class="swiper-slide"><img class="image_product rounded" src="@Model.imageObj?.mediumUrl" srcset="@Model.imageObj?.mediumUrl 2x" alt="@Model.name" /></div>
+                                }
+                                @if (imageList.Count() > 0)
+                                {
+                                    for (int i = 0; i < imageList.Count(); i++)
+                                    {
+                                        <div class="swiper-slide"><img class="image_product rounded" src="@imageList[i]" srcset="@imageList[i] 2x" alt="@Model.name" /></div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="col-lg-6">
+                <div class="post-header mb-5">
+                    <h1 class="post-title display-5">@Model.name</h1>
+                    @if (Model.productCategoryId > 0)
+                    {
+                        <a href="/san-pham?c=@Model.productCategoryId" class="link-body ratings-wrapper">
+                            @if (!string.IsNullOrEmpty(Model.productCategoryObj?.imageUrl))
+                            {
+                                <img src="@Model.productCategoryObj?.imageUrl" style="height:30px;width:30px;object-fit:contain;" alt="icon" />
+                            }
+                            @Model.productCategoryObj?.name
+                        </a>
+                    }
+                    <p class="price fs-20 mb-2">
+                        @if (Model.discount > 0)
+                        {
+                            <ins><span class="amount">@Model.discount?.ToString("#,###", cul.NumberFormat)đ</span></ins>
+                            <span class="small ms-1 text-muted"><del>@Model.price?.ToString("#,###", cul.NumberFormat)đ</del></span>
+                        }
+                        else if (Model.price > 0)
+                        {
+                            <span>@Model.price?.ToString("#,###", cul.NumberFormat)đ</span>
+                        }
+                        else
+                        {
+                            
+                        }
+                    </p>
+                    @if (allowCatalogue && !string.IsNullOrEmpty(Model.catalogueObj?.relativeUrl))
+                    {
+                        <div class="row">
+                            <div class="col-lg-9 d-flex flex-row pt-2">
+                                <div class="flex-grow-1 mx-2">
+                                    <a href="@Model.catalogueObj?.relativeUrl" target="_blank" rel="noreferrer" class="btn btn-primary btn-icon btn-icon-start rounded w-100 flex-grow-1"><i class="uil uil-eye"></i> Xem Catalogue</a>
+                                </div>
+                                @if (countCatalogue > 0)
+                                {
+                                    <div>
+                                        <a href="/catalogue/product/@Model.metaUrl" target="_blank" class="btn btn-block btn-success btn-icon rounded px-3 w-100 h-100" data-toggle="tooltip" data-placement="top" title="Xem FlipBook Catalogue"><i class="uil uil-book-open"></i></a>
+                                    </div>
+                                }
+                                @* <div>
+                            <a onclick="DownloadByLink('@Model.imageObj?.relativeUrl','@(Model.nameSlug)_catalogue.pdf')" href="javascript:void(0)" class="btn btn-block btn-success btn-icon rounded px-3 w-100 h-100" data-toggle="tooltip" data-placement="top" title="Tải về Catalogue"><i class="uil uil-cloud-download"></i></a>
+                            </div> *@
+                            </div>
+                        </div>
+                    }
+                </div>
+                <p class="mb-6 text-wrap">@Model.description</p>
+                <h4 class="mb-2">Thông tin liên hệ:</h4>
+                @if (!string.IsNullOrEmpty(supplierInfo.phone))
+                {
+                    <div class="d-flex flex-row">
+                        <div>
+                            <div class="icon text-primary fs-28 me-6 mt-n1"> <i class="uil uil-phone-volume"></i> </div>
+                        </div>
+                        <div>
+                            <p class="mb-1 h6">Điện thoại</p>
+                            <p class="mb-1"><a href="tel:@supplierInfo.phone" class="link-body" rel="noreferrer">@supplierInfo.phone</a></p>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(supplierInfo.hotline))
+                {
+                    <div class="d-flex flex-row">
+                        <div>
+                            <div class="icon text-primary fs-28 me-6 mt-n1"> <i class="uil uil-phone-volume"></i> </div>
+                        </div>
+                        <div>
+                            <p class="mb-1 h6 notranslate">Hotline</p>
+                            <p class="mb-1"><a href="tel:@supplierInfo.hotline" class="link-body" rel="noreferrer">@supplierInfo.hotline</a></p>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(supplierInfo.email))
+                {
+                    <div class="d-flex flex-row">
+                        <div>
+                            <div class="icon text-primary fs-28 me-6 mt-n1"> <i class="uil uil-envelope"></i> </div>
+                        </div>
+                        <div>
+                            <p class="mb-1 h6 notranslate">E-mail</p>
+                            <p class="mb-1"><a href="mailto:@supplierInfo.email" class="link-body" rel="noreferrer">@supplierInfo.email</a></p>
+                        </div>
+                    </div>
+                }
+
+                <div class="position-relative mt-4 mb-2">
+                    <a class="collapse-link stretched-link collapsed" data-bs-toggle="collapse" href="#collapse_info_contact" aria-expanded="false">Để lại thông tin của bạn</a>
+                </div>
+                <div id="collapse_info_contact" class="p-0 accordion-collapse collapse">
+                    <p class="px-2">Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
+                    <partial name="P_ContactForm" model="new EM_Contact { productId = Model.id }" />
+                </div>
+            </div>
+        </div>
+        <ul class="nav nav-tabs nav-tabs-basic mt-12">
+            @if (!string.IsNullOrEmpty(Model.detail))
+            {
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#tab_detail">Thông tin sản phẩm</a>
+                </li>
+            }
+            @if (!string.IsNullOrEmpty(Model.videoUrl))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#tab_video">Video</a>
+                </li>
+            }
+        </ul>
+        <div class="tab-content mt-0 mt-md-5">
+            <div class="tab-pane fade show active" id="tab_detail">
+                <div class="detail_content">
+                    @Html.Raw(Model.detail)
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab_video">
+                <div class="row justify-content-center px-4">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-6" style="background-size: cover;background-image:url(@(string.IsNullOrEmpty(Model.imageObj?.relativeUrl) ? "/assets/portal/img/photos/bg13.jpg" : Model.imageObj?.relativeUrl))">
+                        <div class="caption-wrapper p-12 caption-wrapper p-12 d-flex align-items-center justify-content-center" style="height:300px">
+                            <div class="caption rounded px-4 animate__animated animate__slideInDown animate__delay-1s">
+                                <a href="@Model.videoUrl" class="btn btn-circle btn-white btn-play ripple mx-auto"
+                                   data-gallery="gallery-video" data-glightbox><i class="icn-caret-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (productRelated.Any())
+{
+    <section class="wrapper bg-gray">
+        <div class="container py-8 py-md-10">
+            <h3 class="h2 mb-6 text-center">Sản phẩm liên quan</h3>
+            <div class="swiper-container blog grid-view shop mb-6" data-margin="30" data-dots="true" data-items-xl="3" data-items-md="2" data-items-xs="1">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        @foreach (var item in productRelated)
+                        {
+                            decimal ratio = 0;
+                            if (item.discount > 0)
+                            {
+                                ratio = Math.Ceiling((decimal)((item.price - item.discount) * 100 / item.price));
+                            }
+                            <div class="swiper-slide project item">
+                                <figure class="rounded mb-2">
+                                    <img class="image_product" loading="lazy" src="@(string.IsNullOrEmpty(item.imageObj?.relativeUrl) ? "/images/error-image.png" : item.imageObj?.relativeUrl)" srcset="@(string.IsNullOrEmpty(item.imageObj?.mediumUrl) ? "/images/error-image.png" : item.imageObj?.mediumUrl) 2x" alt="@item.name" />
+                                    <a href="/san-pham/@item.metaUrl" class="item-cart"><i class="uil uil-eye"></i> Xem</a>
+                                    @if (ratio > 0)
+                                    {
+                                        <span class="avatar bg-theme-second text-white w-10 h-10 position-absolute text-uppercase fs-13" style="top: 1rem; left: 1rem;"><span>-@(ratio < 10 ? $"0{ratio}" : ratio)%</span></span>
+                                    }
+                                </figure>
+                                <div class="post-header">
+                                    <div class="d-flex flex-row align-items-center justify-content-between mb-2">
+                                        <div class="post-category text-ash mb-0">@(item.productCategoryId > 0 ? item.productCategoryObj?.name : "")</div>
+                                    </div>
+                                    <h2 class="post-title h3 fs-22" data-toggle="tooltip" data-placement="top" title="@item.name"><a href="/san-pham/@item.metaUrl" class="link-dark">@item.name</a></h2>
+                                    <p class="price">
+                                        @if (item.discount > 0)
+                                        {
+                                            <ins><span class="amount">@item.discount?.ToString("#,###", cul.NumberFormat)đ</span></ins>
+                                            <span class="small ms-1 text-muted"><del>@item.price?.ToString("#,###", cul.NumberFormat)đ</del></span>
+                                        }
+                                        else if (item.price > 0)
+                                        {
+                                            <span>@item.price?.ToString("#,###", cul.NumberFormat)đ</span>
+                                        }
+                                        else
+                                        {
+                                            @*<span>Liên hệ</span>*@
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@if (productHot.Any())
+{
+    <section class="wrapper">
+        <div class="container py-8 py-md-10">
+            <h3 class="h2 mb-6 text-center">Sản phẩm nổi bật</h3>
+            <div class="swiper-container blog grid-view shop mb-6" data-margin="30" data-dots="true" data-items-xl="3" data-items-md="2" data-items-xs="1">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        @foreach (var item in productHot)
+                        {
+                            decimal ratio = 0;
+                            if (item.discount > 0)
+                            {
+                                ratio = Math.Ceiling((decimal)((item.price - item.discount) * 100 / item.price));
+                            }
+                            <div class="swiper-slide project item">
+                                <figure class="rounded mb-2">
+                                    <img class="image_product" loading="lazy" src="@(string.IsNullOrEmpty(item.imageObj?.relativeUrl) ? "/images/error-image.png" : item.imageObj?.relativeUrl)" srcset="@(string.IsNullOrEmpty(item.imageObj?.mediumUrl) ? "/images/error-image.png" : item.imageObj?.mediumUrl) 2x" alt="@item.name" />
+                                    <a href="/san-pham/@item.metaUrl" class="item-cart"><i class="uil uil-eye"></i> Xem</a>
+                                    @if (ratio > 0)
+                                    {
+                                        <span class="avatar bg-theme-second text-white w-10 h-10 position-absolute text-uppercase fs-13" style="top: 1rem; left: 1rem;"><span>-@(ratio < 10 ? $"0{ratio}" : ratio)%</span></span>
+                                    }
+                                </figure>
+                                <div class="post-header">
+                                    <div class="d-flex flex-row align-items-center justify-content-between mb-2">
+                                        <div class="post-category text-ash mb-0">@(item.productCategoryId > 0 ? item.productCategoryObj?.name : "")</div>
+                                    </div>
+                                    <h2 class="post-title h3 fs-22" data-toggle="tooltip" data-placement="top" title="@item.name"><a href="/san-pham/@item.metaUrl" class="link-dark">@item.name</a></h2>
+                                    <p class="price">
+                                        @if (item.discount > 0)
+                                        {
+                                            <ins><span class="amount">@item.discount?.ToString("#,###", cul.NumberFormat)đ</span></ins>
+                                            <span class="small ms-1 text-muted"><del>@item.price?.ToString("#,###", cul.NumberFormat)đ</del></span>
+                                        }
+                                        else if (item.price > 0)
+                                        {
+                                            <span>@item.price?.ToString("#,###", cul.NumberFormat)đ</span>
+                                        }
+                                        else
+                                        {
+                                            @*<span>Liên hệ</span>*@
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
