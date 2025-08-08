@@ -6,6 +6,7 @@ $(document).ready(function () {
     bindCreateFormSubmit(table);
     bindDeleteNewsCategoryEvent(table);
     bindEditNewsCategoryEvent(table);
+    bindEditNewsCategoryEvent(table);
 });
 
 function initNewsCategoryTable() {
@@ -23,7 +24,6 @@ function initNewsCategoryTable() {
                 return json.data;
             },
             error: function (xhr, status, error) {
-                console.error("Lỗi AJAX:", error);
                 ShowToastNoti('warning', '', 'Lỗi không kết nối tới máy chủ!');
             }
         },
@@ -122,6 +122,71 @@ function bindDeleteNewsCategoryEvent(table) {
                 }
             });
         }
+    });
+}
+function bindEditNewsCategoryEvent(table) {
+    $('#newsCategoryTable').on('click', '.btn-edit', function () {
+        const id = $(this).data('id');
+
+        $.ajax({
+            url: '/NewsCategory/GetById',
+            type: 'GET',
+            data: { id: id },
+            success: function (res) {
+                if (res && res.data) {
+                    const item = res.data;
+
+   
+                    $('#Id').val(item.id);
+                    $('#Name').val(item.name);
+                    $('#Remark').val(item.remark);
+                    $('#Status').val(item.status);
+                    $('#btnSubmitCreate').hide();
+                    $('#btnSubmitUpdate').show();
+                    $('#createFormContainer').slideDown();
+                    $('#newsCategoryTable_wrapper').hide();
+                } else {
+                    ShowToastNoti('warning', '', 'Không lấy được dữ liệu cần sửa');
+                }
+            },
+            error: function () {
+                ShowToastNoti('warning', '', 'Lỗi khi lấy thông tin danh mục');
+            }
+        });
+    });
+
+    // Submit update
+    $('#btnSubmitUpdate').click(function (e) {
+        e.preventDefault();
+
+        const model = {
+            id: $('#Id').val(),
+            name: $('#Name').val(),
+            remark: $('#Remark').val(),
+            status: $('#Status').val(),
+        };
+
+        $.ajax({
+            url: '/NewsCategory/Update',
+            type: 'POST',
+            data: model,
+            success: function (res) {
+                if (res.result === 1 || res.status === true) {
+                    ShowToastNoti('success', '', 'Cập nhật thành công!');
+                    $('#formCreateNewsCategory')[0].reset();
+                    $('#btnSubmitCreate').show();
+                    $('#btnSubmitUpdate').hide();
+                    $('#createFormContainer').slideUp();
+                    $('#newsCategoryTable_wrapper').show();
+                    table.ajax.reload(null, false);
+                } else {
+                    ShowToastNoti('warning', '', 'Cập nhật thất bại!');
+                }
+            },
+            error: function () {
+                ShowToastNoti('warning', '', 'Lỗi khi cập nhật!');
+            }
+        });
     });
 }
 

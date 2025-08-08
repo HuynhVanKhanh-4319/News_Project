@@ -42,7 +42,19 @@ public class NewsCategoryController : Controller
         var result = await _s_NewsCategory.UpdateStatus(default, id, 0, updatedBy.ToString());
         return Json(new { success = result != null});
     }
-
+    [HttpPost]
+    public async Task<IActionResult> Update(EM_NewsCategory model)
+    {
+        var updatedBy = 0; 
+        var res = await _s_NewsCategory.Update(default, model, updatedBy.ToString());
+        return Json(res);
+    }
+    [HttpGet]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var res = await _s_NewsCategory.GetById(id);
+        return Json(res);
+    }
 
 
 

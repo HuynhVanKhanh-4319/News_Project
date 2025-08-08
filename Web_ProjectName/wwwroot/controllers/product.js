@@ -309,15 +309,15 @@ function LoadPagination(totalRecords, pageSize = 12, currentPage = 1) {
     $('#ul_main_pagination').html(html);
 }
 
-//Clear search keyword
+
 function ClearSearchKeyword(elm) {
     $keywordEl.val('');
     $(elm).parent().remove();
     $pageEl.val(1);
     let record = $recordEl.val();
 
-    //Change Link
+
     let newHref = `${GetLink(1, "keyword=", '')}record=${record}&page=1`;
-    ChangeURLWithOut("", newHref); //not refresh page
+    ChangeURLWithOut("", newHref); 
     LoadListMainData();
 }

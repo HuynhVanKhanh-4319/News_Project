@@ -1,0 +1,73 @@
+﻿@model EM_News
+
+<form id="formCreateNews">
+    <div class="row">
+        
+        <div class="col-md-6 mb-3">
+            <label asp-for="name" class="form-label">Tiêu đề</label>
+            <input asp-for="name" class="form-control" required />
+            <span asp-validation-for="name" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="metaTitle" class="form-label">Meta Title</label>
+            <input asp-for="metaTitle" class="form-control" />
+            <span asp-validation-for="metaTitle" class="text-danger"></span>
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="metaDescription" class="form-label">Meta Description</label>
+            <input asp-for="metaDescription" class="form-control" />
+            <span asp-validation-for="metaDescription" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="metaKeywords" class="form-label">Meta Keywords</label>
+            <input asp-for="metaKeywords" class="form-control" />
+            <span asp-validation-for="metaKeywords" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="metaUrl" class="form-label">Meta URL</label>
+            <input asp-for="metaUrl" class="form-control" />
+            <span asp-validation-for="metaUrl" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="metaImagePreview" class="form-label">Meta Image Preview (URL)</label>
+            <input asp-for="metaImagePreview" class="form-control" />
+            <span asp-validation-for="metaImagePreview" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="newsCategoryId" class="form-label">Danh mục</label>
+            <select id="newsCategoryId" name="newsCategoryId" class="form-select" required></select>
+            <span asp-validation-for="newsCategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="publishedAt" class="form-label">Ngày đăng</label>
+            <input asp-for="publishedAt" class="form-control datepicker" autocomplete="off" required />
+            <span asp-validation-for="publishedAt" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-12 mb-3">
+            <label asp-for="description" class="form-label">Mô tả</label>
+            <textarea asp-for="description" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="description" class="text-danger"></span>
+        </div>
+
+
+        <div class="col-md-6 mb-3 d-flex align-items-end">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="isHot" name="isHot" value="true" />
+                <label class="form-check-label" for="isHot">Tin nổi bật</label>
+            </div>
+        </div>
+
+ 
+
+        <input type="hidden" name="status" value="1" />
+      
+        <div class="col-md-12 text-end">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+    </div>
+</form>

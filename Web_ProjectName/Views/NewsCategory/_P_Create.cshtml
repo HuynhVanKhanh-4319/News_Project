@@ -1,30 +1,26 @@
 ﻿@model Web_ProjectName.Models.EM_NewsCategory
 
 <form id="formCreateNewsCategory">
-    <div class="card p-3">
-        <h4>Thêm danh mục mới</h4>
+    <input type="hidden" id="Id" name="id" />
 
-        <div class="form-group">
-            <label for="Name">Tên danh mục</label>
-            <input id="Name" name="Name" class="form-control" required />
-        </div>
-
-        <div class="form-group">
-            <label for="Remark">Ghi chú</label>
-            <input id="Remark" name="Remark" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="Status">Trạng thái</label>
-            <select id="Status" name="Status" class="form-control">
-                <option value="1" selected>Hiện</option>
-                <option value="0">Ẩn</option>
-            </select>
-        </div>
-
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-success">Lưu</button>
-            <button type="button" id="btnCancelCreate" class="btn btn-secondary">Hủy</button>
-        </div>
+    <div>
+        <label>Tên danh mục</label>
+        <input id="Name" name="name" class="form-control" />
     </div>
+    <div>
+        <label>Ghi chú</label>
+        <input id="Remark" name="remark" class="form-control" />
+    </div>
+    <div>
+        <label>Trạng thái</label>
+        <select id="Status" name="status" class="form-control">
+            <option value="1">Hiện</option>
+            <option value="0">Ẩn</option>
+        </select>
+    </div>
+
+    <br />
+    <button type="submit" id="btnSubmitCreate" class="btn btn-success">Tạo mới</button>
+    <button type="button" id="btnSubmitUpdate" class="btn btn-primary" style="display:none;">Cập nhật</button>
+    <button type="button" id="btnCancelCreate" class="btn btn-secondary">Hủy</button>
 </form>
