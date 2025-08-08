@@ -1,6 +1,29 @@
 ﻿@{
     ViewData["Title"] = "Tin tức";
 }
+@section Styles {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/izi-toast-mater/css/izitoast.min.css" rel="stylesheet" />
+    <link href="~/lib/izi-toast-mater/css/izitoast.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/izi-toast-mater/js/izitoast.min.js"></script>
+    <script src="~/lib/izi-toast-mater/js/izitoast.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
+    <script src="~/js/utility_lib.js"></script>
+    <script src="~/controllers/News.js" asp-append-version="true"></script>
+}
 
 <h2>Danh sách tin tức</h2>
 <button class="btn btn-success mb-3" onclick="openCreateModal()">+ Thêm tin tức</button>
@@ -16,6 +39,31 @@
         </div>
     </div>
 </div>
+<!-- Modal chi tiết -->
+<div id="modalDetail" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content p-3">
+            <h5 class="modal-title">Chi tiết tin tức</h5>
+            <div id="detailFormContainer">
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Update -->
+<div class="modal fade" id="modalUpdate" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cập nhật tin tức</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <div class="modal-body" id="updateFormContainer"></div>
+        </div>
+    </div>
+</div>
+
+
 
 <table id="newsTable" class="table table-bordered">
     <thead>
@@ -28,30 +76,5 @@
     </thead>
 </table>
 
-@section Styles {
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-    <link href="~/lib/izi-toast-mater/css/izitoast.min.css" rel="stylesheet" />
-    <link href="~/lib/izi-toast-mater/css/izitoast.css" rel="stylesheet" />
-    @* <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> *@
-    <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-}
 
-@section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="~/controllers/News.js" asp-append-version="true"></script>
-    <script src="~/js/utility_lib.js"></script>
-    <script src="~/lib/izi-toast-mater/js/izitoast.min.js"></script>
-    <script src="~/lib/izi-toast-mater/js/izitoast.js"></script>
-    @* <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> *@
-    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
-    <script src="~/lib/bootstrap-datepicker/dist/js/il8n/vi.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-}
 

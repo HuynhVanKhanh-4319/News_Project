@@ -43,7 +43,7 @@ namespace Web_ProjectName.Controllers
             ViewBag.category = c;
             ViewBag.record = record;
             ViewBag.page = page;
-            string nameLv1 = Empty;
+            string nameLv1 = default;
 
             keyword = !IsNullOrEmpty(keyword) && keyword.Length > 50 ? keyword.Substring(0, 50) + "..." : keyword;
             var breadCrumb = new VM_BreadCrumb();
@@ -121,7 +121,7 @@ namespace Web_ProjectName.Controllers
                 lv3Url = $"/san-pham?c={res.data.productCategoryId}",
             };
             Task<ResponseData<List<M_Product>>> taskProductHot = _s_Product.GetListBySequenceStatusSupplierIdProductCategoryId("1", "1", _supplierId, default);
-            Task<ResponseData<List<M_Product>>> taskProductRelated = _s_Product.GetListByPaging("1", _supplierId, res.data.productCategoryId.ToString(), Empty, EN_TypeSearchProduct.All, 1, 10);
+            Task<ResponseData<List<M_Product>>> taskProductRelated = _s_Product.GetListByPaging("1", _supplierId, res.data.productCategoryId.ToString(), default, EN_TypeSearchProduct.All, 1, 10);
 
             await Task.WhenAll(taskProductHot, taskProductRelated);
 
@@ -167,7 +167,7 @@ namespace Web_ProjectName.Controllers
             }
             model.supplierId = Convert.ToInt32(_supplierId);
             model.status = 0;
-            var res = await _s_Contact.Create(model, Empty);
+            var res = await _s_Contact.Create(model, default);
             return Json(jResult.MapData(res));
         }
     }

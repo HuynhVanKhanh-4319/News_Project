@@ -103,27 +103,40 @@ function bindCreateFormSubmit(table) {
 function bindDeleteNewsCategoryEvent(table) {
     $('#newsCategoryTable').on('click', '.btn-delete', function () {
         const id = $(this).data('id');
+        if (!id) return;
 
-        if (confirm("Bạn có chắc chắn muốn xoá danh mục này không?")) {
-            $.ajax({
-                url: '/NewsCategory/UpdateStatus',
-                type: 'POST',
-                data: { id: id },
-                success: function (res) {
-                    if (res.success) {
-                        ShowToastNoti('success', '', 'Xoá thành công!');
-                        table.ajax.reload(null, false);
-                    } else {
-                        ShowToastNoti('warning', '', 'Xoá thất bại!');
+        Swal.fire({
+            title: 'Bạn có chắc chắn?',
+            text: "Danh mục này sẽ bị xoá!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Vâng, xoá!',
+            cancelButtonText: 'Huỷ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/NewsCategory/UpdateStatus',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (res) {
+                        if (res.success) {
+                            Swal.fire('Đã xoá!', 'Danh mục đã được xoá.', 'success');
+                            table.ajax.reload(null, false);
+                        } else {
+                            Swal.fire('Thất bại!', res.message || 'Không thể xoá danh mục.', 'error');
+                        }
+                    },
+                    error: function () {
+                        Swal.fire('Lỗi!', 'Đã xảy ra lỗi khi xoá.', 'error');
                     }
-                },
-                error: function () {
-                    ShowToastNoti('warning', '', 'Đã xảy ra lỗi khi xoá.');
-                }
-            });
-        }
+                });
+            }
+        });
     });
 }
+
 function bindEditNewsCategoryEvent(table) {
     $('#newsCategoryTable').on('click', '.btn-edit', function () {
         const id = $(this).data('id');

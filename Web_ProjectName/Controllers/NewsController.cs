@@ -63,9 +63,15 @@ namespace Web_ProjectName.Controllers
             var result = await _s_News.UpdateStatus(default, id, 0, updatedBy.ToString());
             return Json(new { success = result != null });
         }
-        public IActionResult TestCkeditor()
+        [HttpPost]
+        public IActionResult RenderDetailView([FromBody] EM_News model)
+        {           
+            return PartialView("_P_News_Detail", model);
+        }
+        [HttpPost]
+        public IActionResult RenderUpdateView([FromBody] EM_News model)
         {
-            return View();
+            return PartialView("_P_News_Update", model);
         }
 
 

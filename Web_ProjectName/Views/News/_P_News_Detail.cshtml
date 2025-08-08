@@ -1,0 +1,53 @@
+﻿@model EM_News
+
+@if (Model == null)
+{
+    <div class="alert alert-danger">Không có dữ liệu để hiển thị.</div>
+}
+else
+{
+    <form id="formDetailNews">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Tiêu đề</label>
+                <input class="form-control" value="@Model.name" readonly />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Meta Title</label>
+                <input class="form-control" value="@Model.metaTitle" readonly />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Meta Description</label>
+                <input class="form-control" value="@Model.metaDescription" readonly />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Meta Keywords</label>
+                <input class="form-control" value="@Model.metaKeywords" readonly />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Meta URL</label>
+                <input class="form-control" value="@Model.metaUrl" readonly />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Meta Image Preview</label><br />
+                <img src="@Model.metaImagePreview" class="img-fluid" style="max-height: 150px;" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Danh mục</label>
+                <input class="form-control" value="@Model.newsCategoryObj?.name" readonly />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Ngày đăng</label>
+                <input class="form-control" value="@Model.publishedAt.ToString("dd/MM/yyyy")" readonly />
+            </div>
+            <div class="col-md-12 mb-3">
+                <label class="form-label">Mô tả</label>
+                <textarea class="form-control" rows="4" readonly>@Model.description</textarea>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Tin nổi bật</label>
+                <input class="form-control" value="@(Model.isHot ? "Có" : "Không")" readonly />
+            </div>
+        </div>
+    </form>
+}
