@@ -1,0 +1,104 @@
+﻿@model EM_News
+@if (Model == null)
+{
+    <div class="alert alert-danger">Không có dữ liệu để hiển thị.</div>
+}
+else
+{
+    <form id="form_detail_news" class="mobile-friendly-form">
+        <div class="card mb-4 focus-section" data-section="basic-info">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Thông tin cơ bản</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group click-to-focus">
+                            <label class="form-label fw-bold">Tiêu đề</label>
+                            <div class="form-control-plaintext">@Model.name</div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group click-to-focus">
+                            <label class="form-label fw-bold">Danh mục</label>
+                            <div class="form-control-plaintext">@Model.newsCategoryObj?.name</div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group click-to-focus">
+                            <label class="form-label fw-bold">Ngày đăng</label>
+                            <div class="form-control-plaintext">@Model.publishedAt.ToString("dd/MM/yyyy")</div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group click-to-focus">
+                            <label class="form-label fw-bold">Tin nổi bật</label>
+                            <div class="form-control-plaintext">
+                                <span class="badge @(Model.isHot ? "bg-success" : "bg-secondary")">
+                                    @(Model.isHot ? "Có" : "Không")
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4 focus-section" data-section="description">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Mô tả</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group click-to-focus">
+                    <div class="form-control-plaintext">@Model.description</div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4 focus-section" data-section="meta-info">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Meta thông tin</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group click-to-focus">
+                            <label class="form-label fw-bold">Meta Title</label>
+                            <div class="form-control-plaintext">@Model.metaTitle</div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group click-to-focus">
+                            <label class="form-label fw-bold">Meta URL</label>
+                            <div class="form-control-plaintext">@Model.metaUrl</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group click-to-focus">
+                            <label class="form-label fw-bold">Meta Description</label>
+                            <div class="form-control-plaintext">@Model.metaDescription</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group click-to-focus">
+                            <label class="form-label fw-bold">Meta Keywords</label>
+                            <div class="form-control-plaintext">@Model.metaKeywords</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group click-to-focus">
+                            <label class="form-label fw-bold">Meta Image Preview</label>
+                            <div class="mt-2">
+                                <img src="@Model.metaImagePreview" class="img-fluid rounded border" style="max-height: 150px; width: auto;" onerror="this.src='/images/default-news.png'" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 text-end">
+            <button type="button" class="btn btn-secondary px-4 ms-2" data-bs-dismiss="modal">Thoát</button>
+        </div>
+    </form>
+}
+
+
+

@@ -46,24 +46,25 @@ namespace Web_ProjectName.Controllers
             string nameLv1 = default;
 
             keyword = !IsNullOrEmpty(keyword) && keyword.Length > 50 ? keyword.Substring(0, 50) + "..." : keyword;
+
             var breadCrumb = new VM_BreadCrumb();
             if (!IsNullOrEmpty(keyword))
             {
                 breadCrumb.currentName = keyword;
-                breadCrumb.lv1Name = "Sản phẩm";
-                breadCrumb.lv1Url = "/san-pham";
+                breadCrumb.lv1Name = "Tin tức";
+                breadCrumb.lv1Url = "/tin-tuc";
             }
             else
             {
                 if (!IsNullOrEmpty(nameLv1))
                 {
                     breadCrumb.currentName = nameLv1;
-                    breadCrumb.lv1Name = "Sản phẩm";
-                    breadCrumb.lv1Url = "/san-pham";
+                    breadCrumb.lv1Name = "Tin tức";
+                    breadCrumb.lv1Url = "/tin-tuc";
                 }
                 else
                 {
-                    breadCrumb.currentName = "Sản phẩm";
+                    breadCrumb.currentName = "Tin tức";
                 }
             }
             SetDropDownTypeProduct(type);

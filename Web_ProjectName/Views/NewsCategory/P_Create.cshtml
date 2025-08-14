@@ -1,0 +1,26 @@
+﻿@model Web_ProjectName.Models.EM_NewsCategory
+
+<form id="form_create_news_category">
+    <input type="hidden" id="Id" name="id" />
+
+    <div>
+        <label>Tên danh mục</label>
+        <input id="Name" name="name" class="form-control" maxlength="20" />
+    </div>
+    <div>
+        <label>Ghi chú</label>
+        <input id="Remark" name="remark" class="form-control" maxlength="100" />
+    </div>
+    <div>
+        <label>Trạng thái</label>
+        <select id="Status" name="status" class="form-control">
+            <option value="1">Hiện</option>
+            <option value="0">Ẩn</option>
+        </select>
+    </div>
+
+    <br />
+    <button type="submit" id="btn_submit_create" class="btn btn-success">Tạo mới</button>
+    <button type="button" id="btn_submit_update" class="btn btn-primary" style="display:none;">Cập nhật</button>
+    <button type="button" id="btn_cancel_create" class="btn btn-secondary">Hủy</button>
+</form>

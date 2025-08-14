@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "_LayoutUser";
+}
+@section Styles {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/izi-toast-mater/css/izitoast.min.css" rel="stylesheet" />
+    <link href="~/lib/izi-toast-mater/css/izitoast.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/izi-toast-mater/js/izitoast.min.js"></script>
+    <script src="~/lib/izi-toast-mater/js/izitoast.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
+    <script src="~/js/utility_lib.js">
+    </script><script src="~/controllers/news_user.js"></script>
+
+}
+
+<main class="container my-4">
+    <!-- Featured News -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="featured-news">
+                <span class="category-badge badge bg-primary-custom">Nổi bật</span>
+                <img src="https://vff.org.vn/wp-content/uploads/2019/12/DONG0063-1.jpg" alt="Featured News" class="img-fluid w-100">
+                <div class="overlay">
+                    <h2 class="mb-2">Việt Nam đạt thành tích cao nhất lịch sử tại SEA Games 32</h2>
+                    <p class="mb-0">Đoàn thể thao Việt Nam giành 136 huy chương vàng, xếp vị trí thứ nhất toàn đoàn.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- News Categories -->
+    <div id="sport_news_container">
+        
+    </div>
+
+    <!-- More News Sections -->
+    <div id="domestic_news_container">
+       
+    </div>
+</main>

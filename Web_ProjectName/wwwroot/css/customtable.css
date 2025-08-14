@@ -1,0 +1,50 @@
+﻿
+/* CSS tùy chỉnh */
+.mobile-friendly-form {
+    scroll-behavior: smooth;
+}
+
+.focus-section {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.click-to-focus {
+    padding: 12px;
+    margin: -12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+    .click-to-focus:active {
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+
+.focused-section {
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .mobile-friendly-form .card {
+        margin-bottom: 1rem;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .mobile-friendly-form .card-header {
+        padding: 0.75rem 1rem;
+        position: sticky;
+        top: 0;
+        background-color: #f8f9fa;
+        z-index: 10;
+    }
+
+    .click-to-focus {
+        padding: 16px 12px;
+    }
+}
+

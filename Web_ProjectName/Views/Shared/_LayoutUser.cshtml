@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsHub - Tin tức 24/7</title>
+    <link rel="icon" href="https://img.icons8.com/fluency/48/language-skill.png" type="image/png" />
+
+    <partial name="_P_StylesUser" />
+
+   
+    @RenderSection("Styles", required: false)
+
+</head>
+<body>
+    <!-- load isHot -->
+    <partial name="P_News_Hot" model="ViewBag.HotNews" />
+    <partial name="_P_Menu" />
+    <!-- Main Content -->
+    @RenderBody()
+    <!-- Footer -->
+
+    <partial name="_P_FooterUser" />
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/user.js" asp-append-version="true"></script>
+    <script src="~/controllers/news_user.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -153,6 +153,13 @@ namespace Web_ProjectName.Controllers
                 if (package != null)
                     _memoryCache.Set(CommonConstants.CACHE_KEY_PACKAGE, package, cacheExpiryOptions);
             }
+            var newsService = HttpContext.RequestServices.GetService<IS_News>();
+            var hotNewsTask = newsService.GetListByStatus(default, 1);
+            hotNewsTask.Wait(); // đồng bộ ở OnActionExecuting
+            var hotNewsData = hotNewsTask.Result?.data?.Where(n => n.isHot == false).ToList() ?? new List<M_News>();
+
+            ViewBag.HotNews = hotNewsData;
+
 
             ViewBag.SupplierInfo = supplierInfo.data ?? new M_Supplier();
             ViewBag.MenuProductCategory = productCategory.data ?? new List<M_ProductCategory>();

@@ -21,13 +21,29 @@ namespace Web_ProjectName.Controllers
         {
             return View();
         }
-
         [HttpGet]
-        public async Task<IActionResult> GetList(int status)
+        public async Task<IActionResult> GetList([FromQuery] List<int> status, [FromQuery] int? categoryId)
         {
-            var result = await _s_News.GetListByStatus(null, status); 
-            return Json(result);
+            var allData = new List<M_News>();
+
+        
+            foreach (var s in status)
+            {
+                var result = await _s_News.GetListByStatus(default, s);
+                if (result?.data != null)
+                    allData.AddRange(result.data);
+            }
+
+            if (categoryId.HasValue && categoryId.Value > 0)
+            {
+                allData = allData
+                    .Where(x => x.newsCategoryId == categoryId.Value)
+                    .ToList();
+            }
+
+            return Json(new { data = allData });
         }
+
 
         public async Task<IActionResult> Create()
         {
@@ -36,9 +52,8 @@ namespace Web_ProjectName.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(EM_News model)
+        public async Task<IActionResult> Create([FromForm] EM_News model)
         {
-
             var createdBy = 0; 
 
             var result = await _s_News.Create(default, model, createdBy.ToString());
@@ -57,21 +72,23 @@ namespace Web_ProjectName.Controllers
             var res = await _s_News.GetById(id);
             return Json(res);
         }
-        public async Task<IActionResult> UpdateStatus(int id)
+        [HttpPost]
+        public async Task<IActionResult> UpdateStatus(int id, int status)
         {
-            var updatedBy = 0;
-            var result = await _s_News.UpdateStatus(default, id, 0, updatedBy.ToString());
+            var updatedBy = 0; 
+            var result = await _s_News.UpdateStatus(default, id, status, updatedBy.ToString());
             return Json(new { success = result != null });
         }
+
         [HttpPost]
         public IActionResult RenderDetailView([FromBody] EM_News model)
         {           
-            return PartialView("_P_News_Detail", model);
+            return PartialView("P_News_Detail", model);
         }
         [HttpPost]
         public IActionResult RenderUpdateView([FromBody] EM_News model)
         {
-            return PartialView("_P_News_Update", model);
+            return PartialView("P_News_Update", model);
         }
 
 

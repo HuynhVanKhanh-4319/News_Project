@@ -2,41 +2,59 @@
     ViewBag.Title = "Danh mục tin tức";
 }
 
-<h2>Danh mục tin tức</h2>
-
-<button id="btnToggleForm" class="btn btn-primary mb-3">Thêm mới</button>
-<div id="createFormContainer" style="display: none;">
-    <partial name="_P_Create" />
-</div>
-
-<div id="dataTableContainer">
-    <table id="newsCategoryTable" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>Tên danh mục</th>
-                <th>Slug</th>
-                <th>Ghi chú</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-    </table>
-</div>
-
 @section Styles {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Load jQuery chỉ 1 lần -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
     <link href="~/lib/izi-toast-mater/css/izitoast.min.css" rel="stylesheet" />
     <link href="~/lib/izi-toast-mater/css/izitoast.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 }
 
 @section Scripts {
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="~/controllers/newsCategory.js" asp-append-version="true"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+
     <script src="~/js/utility_lib.js"></script>
     <script src="~/lib/izi-toast-mater/js/izitoast.min.js"></script>
     <script src="~/lib/izi-toast-mater/js/izitoast.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-maxlength/1.10.0/bootstrap-maxlength.min.js"></script>
+    <script src="~/controllers/newsCategory.js" asp-append-version="true"></script>
 }
+
+
+<h2>Danh mục tin tức</h2>
+
+<button id="btn_toggle_form" class="btn btn-primary mb-3">Thêm mới</button>
+<div id="create_form_container" style="display: none;">
+    <partial name="P_Create" />
+</div>
+<div class="card">
+    <div class="card-body p-0">
+        <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+            <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                <table id="news_category_table" class="table table-bordered table-hover" style="width:100%; min-width: 600px;">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="min-width: 180px">Tên danh mục</th>
+                            <th style="min-width: 150px">Slug</th>
+                            <th style="min-width: 200px">Ghi chú</th>
+                            <th style="min-width: 150px">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+﻿@model EM_News
+
+<div class="container py-3">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Cập nhật tin tức</h5>
+        </div>
+        <div class="card-body">
+            <form id="form_update_news" class="row g-3">
+                <input type="hidden" asp-for="id" />
+
+                <div class="col-12 col-md-6">
+                    <label asp-for="name" class="form-label">Tiêu đề</label>
+                    <input asp-for="name" class="form-control" required maxlength="250" />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label asp-for="metaTitle" class="form-label">Meta Title</label>
+                    <input asp-for="metaTitle" class="form-control" maxlength="100" />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label asp-for="metaDescription" class="form-label">Meta Description</label>
+                    <input asp-for="metaDescription" class="form-control" maxlength="160" />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label asp-for="metaKeywords" class="form-label">Meta Keywords</label>
+                    <input asp-for="metaKeywords" class="form-control" maxlength="100" />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label asp-for="metaUrl" class="form-label">Meta URL</label>
+                    <input asp-for="metaUrl" class="form-control" maxlength="200" required />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label asp-for="metaImagePreview" class="form-label">Meta Image Preview</label>
+                    <input asp-for="metaImagePreview" class="form-control" maxlength="200" />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label for="newsCategoryIdUpdate" class="form-label">Danh mục</label>
+                    <select id="newsCategoryIdUpdate" name="newsCategoryId" class="form-select" required></select>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label asp-for="publishedAt" class="form-label">Ngày đăng</label>
+                    <input asp-for="publishedAt" type="text" class="form-control datepicker" autocomplete="off" required />
+                </div>
+
+                <div class="col-12">
+                    <label for="descriptionUpdate" class="form-label">Nội dung</label>
+                    <textarea id="descriptionUpdate" name="description" class="form-control" rows="5" maxlength="500"></textarea>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-check">
+                        <input type="hidden" name="isHot" value="false" />
+                        <input type="checkbox" class="form-check-input" id="isHotUpdate" name="isHot" value="true" />
+                        <label class="form-check-label" for="isHotUpdate">Tin nổi bật</label>
+                    </div>
+                </div>
+
+                <input type="hidden" name="status" value="1" />
+
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary px-4">Cập nhật</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

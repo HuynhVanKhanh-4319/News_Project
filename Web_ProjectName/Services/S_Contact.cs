@@ -43,11 +43,10 @@ namespace Web_ProjectName.Services
         }
         public async Task<ResponseData<M_Contact>> Create(EM_Contact model, string createdBy)
         {
-            model = CleanXSSHelper.CleanXSSObject(model); //Clean XSS
+            model = CleanXSSHelper.CleanXSSObject(model);
             Dictionary<string, dynamic> dictPars = new Dictionary<string, dynamic>
             {
-                {"supplierId", model.supplierId},
-                {"productId", model.productId ?? 0},
+                {"producId", model.productId ?? 0},
                 {"name", model.name},
                 {"email", model.email},
                 {"phone", model.phone},

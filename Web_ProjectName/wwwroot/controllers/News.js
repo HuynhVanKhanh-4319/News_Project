@@ -1,16 +1,36 @@
 ﻿
 $(document).ready(function () {
-    initNewsTable();
-    handleCreateNews();
-    bindCreateModalEvents();
-    bindDeleteNewsEvent();
-    bindViewDetailEvent();
-    bindEditNewsEvent();
+    LoadNewsCategories($('#filterCategory'));
+    InitNewsTable();
+    HandleCreateNews();
+    BindCreateModalEvents();
+    BindDeleteNewsEvent();
+    BindViewDetailEvent();
+    BindEditNewsEvent();
     $('<style>.cke_notification_warning { display: none !important; }</style>').appendTo('head');
+    $('#modal_update_news').on('hidden.bs.modal', function () {
+        const $btnOpen = $('#btnOpenUpdateNewsModal');
+        if ($btnOpen.length) {
 
+            $btnOpen.focus();
+        } else {
+            $('body').focus();
+        }
+    });
 });
-
-function escapeHtml(text) {
+function InitMaxLength(scope) {
+    $(scope).find('input[maxlength], textarea[maxlength]').maxlength({
+        alwaysShow: true,
+        warningClass: "badge bg-info",
+        limitReachedClass: "badge bg-danger",
+        placement: 'bottom-right-inside',
+        separator: ' / ',
+        preText: 'Đã nhập ',
+        postText: ' ký tự.',
+        validate: true
+    });
+}
+function EscapeHtml(text) {
     if (!text) return '';
     return text
         .replace(/&/g, "&amp;")
@@ -20,68 +40,176 @@ function escapeHtml(text) {
         .replace(/'/g, "&#039;");
 }
 
-function truncateWithTooltip(text, maxLength = 50) {
+function TruncateWithTooltip(text, maxLength = 20) {
     if (!text) return '';
     const truncated = text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-    return `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${escapeHtml(text)}">${escapeHtml(truncated)}</span>`;
+    return `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${EscapeHtml(text)}">${EscapeHtml(truncated)}</span>`;
 }
 
-function initNewsTable() {
+// Cấu hình Ajax cho bảng News
+const dataParamsNews = function () {
     $.fn.dataTable.ext.errMode = 'none';
+    return {
+        type: 'GET',
+        url: '/News/GetList',
+        traditional: true, // Cho phép truyền array qua query string
+        data: function (d) {
+            d.status = [0, 1];
+            d.categoryId = $('#filterCategory').val() || null;
+        },
+        dataType: 'json',
+        dataSrc: function (json) {
+            if (!json || !Array.isArray(json.data)) return [];
+            return json.data;
+        },
+        error: function (xhr, status, error) {
+            console.error("Error loading data:", error);
+            ShowToastNoti('warning', '', 'Lỗi không kết nối tới máy chủ!');
+            return [];
+        }
+    };
+};
 
-    const table = $('#newsTable').DataTable({
-        ajax: {
-            url: '/News/GetList?status=1',
-            dataSrc: function (json) {
-                if (!json || !Array.isArray(json.data)) return [];
-                return json.data;
+// Cấu hình cột cho bảng News
+const columnNews = function () {
+    return [
+        {
+            data: 'name',
+            title: 'Tiêu đề',
+            render: function (data) {
+                return TruncateWithTooltip(data);
             }
         },
-        columns: [
-            {
-                data: 'name',
-                title: 'Tiêu đề',
-                render: function (data) {
-                    return truncateWithTooltip(data);
-                }
-            },
-            {
-                data: 'description',
-                title: 'Mô tả',
-                render: function (data) {
-                    return truncateWithTooltip(data);
-                }
-            },
-            {
-                data: 'newsCategoryObj.name',
-                title: 'Danh mục',
-                render: function (data) {
-                    return escapeHtml(data || '(Không có)');
-                }
-            },
-            {
-                data: null,
-                orderable: false,
-                render: function (row) {
-                    return `
-                        <button class="btn btn-info btn-sm btn-view" data-id="${row.id}" title="Xem chi tiết"><i class="fas fa-eye"></i></button>
-                        <button class="btn btn-warning btn-sm btn-edit" data-id="${row.id}" title="Chỉnh sửa"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-sm btn-danger btn-delete" data-id="${row.id}" title="Xoá"><i class="fas fa-trash-alt"></i></button>
-                    `;
-                }
+        {
+            data: 'description',
+            title: 'Mô tả',
+            render: function (data) {
+                return TruncateWithTooltip(data);
             }
-        ]
+        },
+        {
+            data: 'newsCategoryObj.name',
+            title: 'Danh mục',
+            render: function (data) {
+                return EscapeHtml(data || '(Không có)');
+            }
+        },
+        {
+            data: 'status',
+            title: 'Trạng thái',
+            render: function (data, type, row) {
+                const status = parseInt(data, 10);
+                const btnClass = status === 1 ? 'btn-success' : 'btn-danger';
+                const btnText = status === 1 ? 'Hoạt động' : 'Không hoạt động';
+                return `<button class="btn btn-sm ${btnClass} btn-toggle-status" data-id="${row.id}" data-status="${status}">${btnText}</button>`;
+            }
+        },
+        {
+            data: null,
+            orderable: false,
+            render: function (row) {
+                return `
+                    <button class="btn btn-info btn-sm btn-view" data-id="${row.id}" title="Xem chi tiết"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-warning btn-sm btn-edit" data-id="${row.id}" title="Chỉnh sửa"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger btn-delete" data-id="${row.id}" title="Xoá"><i class="fas fa-trash-alt"></i></button>
+                `;
+            }
+        }
+    ];
+};
+
+// Hàm khởi tạo bảng News
+function InitNewsTable() {
+    if (typeof newsTable !== "undefined" && newsTable) {
+        newsTable.destroy();
+    }
+
+    let options = {
+        dom: '<"top"lfB><"clear">tr<"bottom"ip>',
+        paging: true,
+        processing: true,
+        serverSide: false,
+        scrollX: true,
+        responsive: false, // Giống NewsCategory
+        autoWidth: true,
+        order: [[0, 'asc']],
+        ajax: dataParamsNews(),
+        columns: columnNews(),
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/vi.json'
+        },
+        fixedColumns: {
+            left: 1 // Giống NewsCategory
+        },
+        initComplete: function () {
+            this.api().columns.adjust();
+            $(window).trigger('resize');
+        }
+    };
+
+    newsTable = $('#news_table').DataTable(options);
+
+    $('#filterCategory').on('change', function () {
+        newsTable.ajax.reload();
     });
 
-    $('#newsTable').on('draw.dt', function () {
+    $('#news_table').on('click', '.btn-toggle-status', function () {
+        const id = $(this).data('id');
+        const currentStatus = $(this).data('status');
+        const newStatus = currentStatus === 1 ? 0 : 1;
+        const statusText = newStatus === 1 ? 'Hoạt động' : 'Không hoạt động';
+
+        Swal.fire({
+            title: 'Xác nhận thay đổi?',
+            text: `Bạn có chắc muốn đổi trạng thái sang "${statusText}"?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Huỷ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/News/UpdateStatus',
+                    type: 'POST',
+                    data: { id: id, status: newStatus },
+                    success: function (res) {
+                        if (res.success) {
+                            Swal.fire('Thành công!', 'Trạng thái đã được cập nhật.', 'success');
+                            newsTable.ajax.reload(null, false);
+                        } else {
+                            Swal.fire('Thất bại!', res.message || 'Không thể cập nhật trạng thái.', 'error');
+                        }
+                    },
+                    error: function () {
+                        Swal.fire('Lỗi!', 'Lỗi khi gọi API cập nhật trạng thái.', 'error');
+                    }
+                });
+            }
+        });
+    });
+
+    $('#news_table').on('draw.dt', function () {
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
     });
+
+    $(window).on('resize', function () {
+        if (newsTable) {
+            setTimeout(function () {
+                newsTable.columns.adjust().draw(false);
+            }, 100);
+        }
+    });
+
+    return newsTable;
 }
 
-function loadNewsCategories($select, selectedId = null, parentModal = null) {
+
+function LoadNewsCategories($select, selectedId = null, parentModal = null) {
     $.get('/NewsCategory/GetList?status=1', function (res) {
         $select.empty();
 
@@ -104,7 +232,7 @@ function loadNewsCategories($select, selectedId = null, parentModal = null) {
     });
 }
 
-function initCKEditor(id) {
+function InitCKEditor(id) {
     if (CKEDITOR.instances[id]) {
         CKEDITOR.instances[id].destroy(true);
     }
@@ -115,19 +243,19 @@ function initCKEditor(id) {
     });
 }
 
-function handleCreateNews() {
-    $('#formCreateNews').off('submit').on('submit', function (e) {
+function HandleCreateNews() {
+    $('#form_create_news').off('submit').on('submit', function (e) {
         e.preventDefault();
 
+        // Cập nhật nội dung CKEditor vào textarea
         for (var instance in CKEDITOR.instances) {
             CKEDITOR.instances[instance].updateElement();
         }
 
         const formData = new FormData(this);
 
-        if (!formData.has('isHot')) {
-            formData.append('isHot', false);
-        }
+        // Ghi đè lại isHot để đảm bảo giá trị đúng
+        formData.set('isHot', $('#isHot').is(':checked') ? 'true' : 'false');
 
         $.ajax({
             url: '/News/Create',
@@ -137,8 +265,8 @@ function handleCreateNews() {
             data: formData,
             success: function (res) {
                 if (res?.result === 1) {
-                    $('#modalCreate').modal('hide');
-                    $('#newsTable').DataTable().ajax.reload(null, false);
+                    $('#modal_create_news').modal('hide');
+                    $('#news_table').DataTable().ajax.reload(null, false);
                     ShowToastNoti('success', '', 'Tạo thành công!');
                 } else {
                     ShowToastNoti('warning', '', res.error?.message || 'Tạo thất bại!');
@@ -151,10 +279,11 @@ function handleCreateNews() {
         });
     });
 }
-function openCreateModal() {
-    $('#modalCreate').modal('show');
-    initCKEditor('description');
-    loadNewsCategories($('#newsCategoryId'), null, $('#modalCreate'));
+
+function OpenCreateModal() {
+    $('#modal_create_news').modal('show');
+    InitCKEditor('description');
+    LoadNewsCategories($(''), null, $('#modal_create_news'));
 
     setTimeout(function () {
         $('.datepicker').datepicker({
@@ -164,22 +293,24 @@ function openCreateModal() {
         });
     }, 200);
 }
-function bindCreateModalEvents() {
-    $('#modalCreate').on('shown.bs.modal', function () {
-        loadNewsCategories($('#newsCategoryId'), null, $('#modalCreate'));
+function BindCreateModalEvents() {
+    $('#modal_create_news').on('shown.bs.modal', function () {
+        LoadNewsCategories($('#newsCategoryId'), null, $('#modal_create_news'));
 
         setTimeout(function () {
             $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd',
+                format: 'dd/MM/yyyy',
                 autoclose: true,
                 todayHighlight: true
             });
-            initCKEditor('description');
+
+            InitCKEditor('description');
+            InitMaxLength('#modal_create_news');
         }, 200);
     });
 
-    $('#modalCreate').on('hidden.bs.modal', function () {
-        $('#formCreateNews')[0].reset();
+    $('#modal_create_news').on('hidden.bs.modal', function () {
+        $('#form_create_news')[0].reset();
 
         if (CKEDITOR.instances['description']) {
             CKEDITOR.instances['description'].setData('');
@@ -189,8 +320,10 @@ function bindCreateModalEvents() {
     });
 }
 
-function bindEditNewsEvent() {
-    $('#newsTable').on('click', '.btn-edit', function () {
+
+
+function BindEditNewsEvent() {
+    $('#news_table').on('click', '.btn-edit', function () {
         const id = $(this).data('id');
 
         $.get(`/News/GetById?id=${id}`, function (res) {
@@ -208,20 +341,20 @@ function bindEditNewsEvent() {
                 contentType: 'application/json',
                 success: function (html) {
                     $('#updateFormContainer').html(html);
-                    $('#modalUpdate').modal('show');
+                    $('#modal_update_news').modal('show');
 
-                    initCKEditor('descriptionUpdate');
-                    loadNewsCategories($('#newsCategoryIdUpdate'), data.newsCategoryId, $('#modalUpdate'));
+                    InitCKEditor('descriptionUpdate');
+                    LoadNewsCategories($('#newsCategoryIdUpdate'), data.newsCategoryId, $('#modal_update_news'));
 
                     $('#isHotUpdate').prop('checked', data.isHot === true);
                     $('.datepicker').datepicker({ format: 'yyyy-mm-dd' });
+                    InitMaxLength('#modal_update_news');
 
-                 
                     setTimeout(function () {
                         CKEDITOR.instances['descriptionUpdate'].setData(data.description || '');
                     }, 300);
 
-                    bindSubmitUpdateNews();
+                    BindSubmitUpdateNews();
                 },
                 error: function () {
                     ShowToastNoti('danger', '', 'Lỗi khi tải form cập nhật.');
@@ -231,30 +364,33 @@ function bindEditNewsEvent() {
     });
 }
 
-function bindSubmitUpdateNews() {
-    $(document).off('submit', '#formUpdateNews').on('submit', '#formUpdateNews', function (e) {
+function BindSubmitUpdateNews() {
+    $(document).off('submit', '#form_update_news').on('submit', '#form_update_news', function (e) {
         e.preventDefault();
 
         for (var instance in CKEDITOR.instances) {
-            CKEDITOR.instances[instance].updateElement();
+            if (CKEDITOR.instances.hasOwnProperty(instance)) {
+                CKEDITOR.instances[instance].updateElement();
+            }
         }
+        const formEl = this;
+        const formData = new FormData(formEl);
 
-        const formData = new FormData(this);
-
-        if (!formData.has('isHot')) {
-            formData.append('isHot', false);
-        }
+        const $chk = $(formEl).find('#isHotUpdate');
+        const isHotChecked = $chk.length ? !!$chk.prop('checked') : false;
+        formData.delete('isHot');
+        formData.append('isHot', isHotChecked ? 'true' : 'false');
 
         $.ajax({
             url: '/News/Update',
             type: 'POST',
+            data: formData,
             processData: false,
             contentType: false,
-            data: formData,
             success: function (res) {
                 if (res?.result === 1 && res?.error?.code === 200) {
-                    $('#modalUpdate').modal('hide');
-                    $('#newsTable').DataTable().ajax.reload(null, false);
+                    $('#modal_update_news').modal('hide');
+                    $('#news_table').DataTable().ajax.reload(null, false);
                     ShowToastNoti('success', '', 'Cập nhật thành công!');
                 } else {
                     ShowToastNoti('warning', '', 'Cập nhật thất bại!');
@@ -268,8 +404,10 @@ function bindSubmitUpdateNews() {
     });
 }
 
-function bindDeleteNewsEvent() {
-    $('#newsTable').on('click', '.btn-delete', function () {
+
+
+function BindDeleteNewsEvent() {
+    $('#news_table').on('click', '.btn-delete', function () {
         const id = $(this).data('id');
 
         if (!id) return;
@@ -288,11 +426,11 @@ function bindDeleteNewsEvent() {
                 $.ajax({
                     url: '/News/UpdateStatus',
                     type: 'POST',
-                    data: { id: id },
+                    data: { id: id, status: -1 },
                     success: function (res) {
                         if (res.success) {
                             Swal.fire('Đã xoá!', 'Tin tức đã được xoá.', 'success');
-                            $('#newsTable').DataTable().ajax.reload(null, false);
+                            $('#news_table').DataTable().ajax.reload(null, false);
                         } else {
                             Swal.fire('Thất bại!', res.message || 'Không thể xoá tin tức.', 'error');
                         }
@@ -306,8 +444,8 @@ function bindDeleteNewsEvent() {
     });
 }
 
-function bindViewDetailEvent() {
-    $('#newsTable').on('click', '.btn-view', function () {
+function BindViewDetailEvent() {
+    $('#news_table').on('click', '.btn-view', function () {
         const id = $(this).data('id');
 
         $.get(`/News/GetById?id=${id}`, function (res) {
@@ -325,7 +463,7 @@ function bindViewDetailEvent() {
                 contentType: 'application/json',
                 success: function (html) {
                     $('#detailFormContainer').html(html);
-                    $('#modalDetail').modal('show');
+                    $('#modal_detail_news').modal('show');
                 },
                 error: function () {
                     ShowToastNoti('danger', '', 'Lỗi khi tải view chi tiết.');
@@ -333,6 +471,6 @@ function bindViewDetailEvent() {
             });
         });
     });
-}
+} 
 
 

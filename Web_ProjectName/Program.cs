@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
 using System.Net.Http.Headers;
 using Web_ProjectName.Lib;
@@ -149,13 +149,35 @@ app.UseEndpoints(endpoints =>
         defaults: new { controller = "Product", action = "ViewDetail" });
 
     endpoints.MapControllerRoute(
+          name: "News Category",
+          pattern: "quan-ly-danh-muc",
+          defaults: new { controller = "NewsCategory", action = "Index" });
+
+    endpoints.MapControllerRoute(
+        name: "News",
+        pattern: "quan-ly-tin-tuc",
+        defaults: new { controller = "News", action = "Index" });
+
+    endpoints.MapControllerRoute(
+         name: "News Detail",
+      pattern: "trang-tin-tuc/{metaUrl}",
+     defaults: new { controller = "NewsUser", action = "Detail" });
+
+    endpoints.MapControllerRoute(
+        name: "NewsUser",
+        pattern: "trang-tin-tuc",
+        defaults: new { controller = "NewsUser", action = "Index" });
+
+    endpoints.MapControllerRoute(
        name: "Error page",
        pattern: "error/{code}",
        defaults: new { controller = "Error", action = "Index" });
 
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=News}/{action=Index}/{id?}");
+
+
 });
 
 app.Run();

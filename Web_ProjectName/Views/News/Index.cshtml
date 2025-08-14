@@ -9,7 +9,10 @@
     <link href="~/lib/izi-toast-mater/css/izitoast.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
     <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/css/customtable.css" rel="stylesheet" />
 }
 
 @section Scripts {
@@ -17,41 +20,46 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-maxlength/1.10.0/bootstrap-maxlength.min.js"></script>
     <script src="~/lib/izi-toast-mater/js/izitoast.min.js"></script>
     <script src="~/lib/izi-toast-mater/js/izitoast.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
     <script src="~/js/utility_lib.js"></script>
+    <script src="~/js/news_detail.js"></script>
     <script src="~/controllers/News.js" asp-append-version="true"></script>
 }
 
 <h2>Danh sách tin tức</h2>
-<button class="btn btn-success mb-3" onclick="openCreateModal()">+ Thêm tin tức</button>
+<button class="btn btn-success mb-3" onclick=" OpenCreateModal()">+ Thêm tin tức</button>
 
 <!-- Modal chứa form -->
-<div id="modalCreate" class="modal fade" tabindex="-1">
+<div id="modal_create_news" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content p-3">
             <h5 class="modal-title">Thêm tin tức</h5>
             <div id="form-container">
-                <partial name="_P_News" />
+                <partial name="P_News_Create" />
             </div>
         </div>
     </div>
 </div>
 <!-- Modal chi tiết -->
-<div id="modalDetail" class="modal fade" tabindex="-1">
+<div id="modal_detail_news" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content p-3">
             <h5 class="modal-title">Chi tiết tin tức</h5>
             <div id="detailFormContainer">
-                
             </div>
         </div>
     </div>
 </div>
 <!-- Modal Update -->
-<div class="modal fade" id="modalUpdate" tabindex="-1" aria-hidden="true">
+<button id="btnOpenUpdateNewsModal" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#modal_update_news">
+</button>
+<div class="modal fade" id="modal_update_news" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -62,19 +70,31 @@
         </div>
     </div>
 </div>
-
-
-
-<table id="newsTable" class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Tiêu đề</th>
-            <th>Mô tả</th>
-            <th>Danh mục</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-</table>
-
-
+<div class="mb-3" style="max-width: 250px;">
+    <label for="filterCategory" class="form-label">Lọc theo danh mục</label>
+    <select id="filterCategory" class="form-select">
+        <option value="">-- Tất cả --</option>
+    </select>
+</div>
+<div class="card">
+    <div class="card-body p-0">
+        <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+            <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                <table id="news_table" class="table table-bordered table-hover" style="width:100%; min-width: 800px;">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="min-width: 200px">Tiêu đề</th>
+                            <th style="min-width: 250px">Mô tả</th>
+                            <th style="min-width: 150px">Danh mục</th>
+                            <th style="min-width: 150px">Trạng thái</th>
+                            <th style="min-width: 150px">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 

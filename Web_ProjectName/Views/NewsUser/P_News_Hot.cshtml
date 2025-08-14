@@ -1,0 +1,23 @@
+﻿@model List<M_News>
+<div class="breaking-news">
+    <div class="container">
+        <div class="d-flex align-items-center">
+            <span class="breaking-news-title d-none d-md-block">TIN NÓNG:</span>
+            <div class="breaking-news-wrapper">
+                <div class="breaking-news-content" id="hotNewsContainer">
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var news in Model)
+                        {
+                            <a href="/trang-tin-tuc/@news.metaUrl">@news.name</a>
+                        }
+                    }
+                    else
+                    {
+                        <span>Không có tin nóng.</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

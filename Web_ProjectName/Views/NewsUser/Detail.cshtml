@@ -1,0 +1,69 @@
+﻿@model M_News
+@{
+    Layout = "_LayoutUser";
+}
+
+@section Styles {
+    <link href="~/lib/fancybox/css/fancybox.css" rel="stylesheet" />
+   
+}
+
+@section Scripts {
+    <script src="~/lib/fancybox/js/fancybox.umd.js"></script>
+    <script src="~/controllers/news_user.js"></script>
+}
+
+
+<main class="container my-4">
+    <article>
+        <header class="article-header">
+            <h1 class="article-title">@Model.name</h1>
+            <div class="article-meta d-flex flex-wrap align-items-center">
+                <span class="me-3">
+                    <i class="far fa-clock"></i> Cập nhật:
+                    @(Model.publishedAt?.ToString("HH:mm dd/MM/yyyy"))
+                </span>
+                <span><i class="far fa-eye"></i> Lượt xem:@Model.viewNumber </span>
+            </div>
+        </header>
+        <div class="article-image text-center mt-4 mb-4">
+            <a href="https://cdn.nhandan.vn/images/78d92bfef5333421c1cfa9f19aa2572af2f6454a381555b801846adcfda20221cb71e3da9481556fa55d4cbbc268cb711f34f0947a42e1218ebfb52d2f756dfd9b861c4436c675bdea917dfc8a9b1ff6/9cc270d3d76299001e2a259c121257c5.jpg"
+               data-fancybox
+               data-caption="@Model.metaImagePreview">
+                <img src="https://cdn.nhandan.vn/images/78d92bfef5333421c1cfa9f19aa2572af2f6454a381555b801846adcfda20221cb71e3da9481556fa55d4cbbc268cb711f34f0947a42e1218ebfb52d2f756dfd9b861c4436c675bdea917dfc8a9b1ff6/9cc270d3d76299001e2a259c121257c5.jpg"
+                     alt="@Model.name"
+                     class="img-fluid" />
+            </a>
+            <div class="caption">@Model.metaImagePreview</div>
+        </div>
+
+        <div class="article-content mt-4">
+            @Html.Raw(Model.description) 
+        </div>
+    </article>
+    <section class="related-news mt-5">
+        <h4 class="mb-4 border-bottom pb-2">Tin liên quan</h4>
+        <div class="row">
+            @foreach (var item in ViewBag.RelatedNews as List<M_News>)
+            {
+                <div class="col-md-4">
+                    <div class="card news-card">
+                        <a href="/trang-tin-tuc/@item.metaUrl">
+                            <img src="https://media-cdn-v2.laodong.vn/storage/newsportal/2025/8/11/1556012/Thuong-Vu1.jpg?w=800&h=496&crop=auto&scale=both" class="card-img-top" alt="@item.name">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="/trang-tin-tuc/@item.metaUrl">@item.name</a>
+                            </h5>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> @(item.publishedAt?.ToString("dd/MM/yyyy"))</span>
+                                <span class="ms-3"><i class="far fa-eye"></i>@item.viewNumber</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+</main>

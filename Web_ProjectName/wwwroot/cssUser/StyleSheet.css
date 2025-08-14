@@ -1,0 +1,243 @@
+﻿
+:root {
+    --primary-color: #d9230f;
+    --secondary-color: #333;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --gray-color: #6c757d;
+}
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    color: var(--secondary-color);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.bg-primary-custom {
+    background-color: var(--primary-color);
+}
+
+.text-primary-custom {
+    color: var(--primary-color);
+}
+
+.btn-primary-custom {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+    .btn-primary-custom:hover {
+        background-color: #b51d0d;
+        border-color: #b51d0d;
+    }
+
+.news-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+    height: 100%;
+}
+
+    .news-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+.featured-news {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+    .featured-news img {
+        transition: transform 0.5s ease;
+    }
+
+    .featured-news:hover img {
+        transform: scale(1.05);
+    }
+
+    .featured-news .overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        padding: 20px;
+        color: white;
+    }
+
+.category-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+}
+
+.news-meta {
+    font-size: 0.85rem;
+    color: var(--gray-color);
+}
+
+    .news-meta i {
+        margin-right: 5px;
+    }
+
+footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 40px 0;
+}
+
+.footer-links h5 {
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+    .footer-links h5::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--primary-color);
+    }
+
+.footer-links ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #adb5bd;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+    .footer-links a:hover {
+        color: white;
+    }
+
+.social-icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    margin-right: 10px;
+    color: white;
+    transition: all 0.3s;
+}
+
+    .social-icons a:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-3px);
+    }
+
+.search-box {
+    position: relative;
+}
+
+    .search-box input {
+        padding-right: 40px;
+        border-radius: 20px;
+    }
+
+    .search-box button {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        background: none;
+        border: none;
+        color: var(--gray-color);
+    }
+
+.breaking-news {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 0;
+}
+
+.breaking-news-title {
+    font-weight: 700;
+    margin-right: 15px;
+}
+
+.breaking-news-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+    .breaking-news-content a {
+        color: white;
+        text-decoration: none;
+        margin-right: 20px;
+    }
+        .breaking-news-content:hover,
+        .breaking-news-content a:hover {
+            animation-play-state: paused;
+            text-decoration: underline;
+        }
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    .breaking-news-title {
+        display: none;
+    }
+
+    .featured-news .overlay h2 {
+        font-size: 1.5rem;
+    }
+}
+.breaking-news-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+    flex: 1; 
+}
+
+.breaking-news-content {
+    display: inline-block;
+    padding-left: 100%; 
+    animation: ticker 30s linear infinite;
+}
+
+    .breaking-news-content a {
+        color: white;
+        text-decoration: none;
+        margin-right: 50px;
+    }
+
+@keyframes ticker {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
