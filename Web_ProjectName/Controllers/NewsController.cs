@@ -83,12 +83,12 @@ namespace Web_ProjectName.Controllers
         [HttpPost]
         public IActionResult RenderDetailView([FromBody] EM_News model)
         {           
-            return PartialView("P_News_Detail", model);
+            return PartialView("P_NewsDetail", model);
         }
         [HttpPost]
         public IActionResult RenderUpdateView([FromBody] EM_News model)
         {
-            return PartialView("P_News_Update", model);
+            return PartialView("P_NewsUpdate", model);
         }
 
 

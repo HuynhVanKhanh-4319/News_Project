@@ -1,10 +1,11 @@
-﻿
+﻿/* ========== CSS TỔNG HỢP ========== */
 :root {
     --primary-color: #d9230f;
     --secondary-color: #333;
     --light-color: #f8f9fa;
     --dark-color: #212529;
     --gray-color: #6c757d;
+    --eco-color: #2a9d8f; /* Thêm màu xanh cho phần giới thiệu công ty */
 }
 
 body {
@@ -18,12 +19,14 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
 }
 
+/* ========== NAVIGATION ========== */
 .navbar-brand {
     font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
     font-weight: 700;
 }
 
+/* ========== UTILITY CLASSES ========== */
 .bg-primary-custom {
     background-color: var(--primary-color);
 }
@@ -43,6 +46,18 @@ h1, h2, h3, h4, h5, h6 {
         border-color: #b51d0d;
     }
 
+.btn-eco-custom {
+    background-color: var(--eco-color);
+    border-color: var(--eco-color);
+    color: white;
+}
+
+    .btn-eco-custom:hover {
+        background-color: #21867a;
+        border-color: #21867a;
+    }
+
+/* ========== NEWS COMPONENTS ========== */
 .news-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-bottom: 20px;
@@ -95,6 +110,130 @@ h1, h2, h3, h4, h5, h6 {
         margin-right: 5px;
     }
 
+/* ========== BREAKING NEWS ========== */
+.breaking-news {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 0;
+}
+
+.breaking-news-title {
+    font-weight: 700;
+    margin-right: 15px;
+}
+
+.breaking-news-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.breaking-news-content {
+    display: inline-block;
+    padding-left: 100%;
+    animation: ticker 70s linear infinite;
+}
+
+    .breaking-news-content a {
+        color: white;
+        text-decoration: none;
+        margin-right: 50px;
+    }
+
+        .breaking-news-content:hover,
+        .breaking-news-content a:hover {
+            animation-play-state: paused;
+            text-decoration: underline;
+        }
+
+@keyframes ticker {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* ========== COMPANY INTRODUCTION ========== */
+.company-header {
+    background: linear-gradient(rgba(42, 157, 143, 0.8), rgba(42, 157, 143, 0.8)), url('https://via.placeholder.com/1920x600') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.company-logo {
+    max-width: 200px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.about-section {
+    padding: 60px 0;
+}
+
+.about-img {
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.mission-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 30px;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+    .mission-card:hover {
+        transform: translateY(-10px);
+    }
+
+.mission-icon {
+    font-size: 2.5rem;
+    color: var(--eco-color);
+    margin-bottom: 20px;
+}
+
+.value-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.value-icon {
+    font-size: 1.5rem;
+    color: var(--eco-color);
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
+.contact-info {
+    background-color: #f8f9fa;
+    padding: 40px;
+    border-radius: 8px;
+}
+
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--eco-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    margin-right: 15px;
+}
+
+/* ========== FOOTER ========== */
 footer {
     background-color: var(--dark-color);
     color: white;
@@ -172,34 +311,7 @@ footer {
         color: var(--gray-color);
     }
 
-.breaking-news {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 10px 0;
-}
-
-.breaking-news-title {
-    font-weight: 700;
-    margin-right: 15px;
-}
-
-.breaking-news-content {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-    .breaking-news-content a {
-        color: white;
-        text-decoration: none;
-        margin-right: 20px;
-    }
-        .breaking-news-content:hover,
-        .breaking-news-content a:hover {
-            animation-play-state: paused;
-            text-decoration: underline;
-        }
-
+/* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
     .navbar-brand {
         font-size: 1.5rem;
@@ -212,32 +324,12 @@ footer {
     .featured-news .overlay h2 {
         font-size: 1.5rem;
     }
-}
-.breaking-news-wrapper {
-    overflow: hidden;
-    white-space: nowrap;
-    flex: 1; 
-}
 
-.breaking-news-content {
-    display: inline-block;
-    padding-left: 100%; 
-    animation: ticker 30s linear infinite;
-}
-
-    .breaking-news-content a {
-        color: white;
-        text-decoration: none;
-        margin-right: 50px;
+    .company-header {
+        padding: 60px 0;
     }
 
-@keyframes ticker {
-    0% {
-        transform: translateX(0%);
-    }
-
-    100% {
-        transform: translateX(-100%);
+    .company-logo {
+        max-width: 150px;
     }
 }
-

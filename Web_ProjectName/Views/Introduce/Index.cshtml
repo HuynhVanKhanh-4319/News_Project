@@ -1,0 +1,130 @@
+﻿@model Web_ProjectName.Models.M_Introduce
+@{
+    Layout = "_LayoutUser";
+}
+@section Styles {
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"> 
+ <link rel="stylesheet" href="~/cssuser/StyleSheet.css" />
+
+}
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+}
+
+
+
+
+<header class="company-header">
+    <div class="container">
+        <img src="https://image-business-ecotech2a.ecotech2a.com/uploads/D1409013-9217-4F3B-AE37-52EF20A6CDD1/images/9c15f975-b99b-482b-aab3-1705b3a7828b.webp" alt="Eco Technology 2A" class="company-logo">
+        <h1 class="mb-3">@Model.name</h1>
+        <p class="lead mb-0">Chuyên phát triển phần mềm và giải pháp truy xuất nguồn gốc nông sản tuân thủ EUDR</p>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="container">
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="mb-4">Về chúng tôi</h2>
+                <p>@Model.description</p>
+                <p>Với đội ngũ kỹ sư giàu kinh nghiệm và đam mê công nghệ, chúng tôi cam kết mang đến những giải pháp phần mềm tối ưu, giúp doanh nghiệp nâng cao hiệu quả hoạt động và tuân thủ các quy định quốc tế.</p>
+                <p>Chúng tôi tin rằng công nghệ phải phục vụ con người và phát triển bền vững, vì một tương lai xanh hơn cho tất cả mọi người.</p>
+            </div>
+            <div class="col-lg-6">
+                <img src="https://image-business-ecotech2a.ecotech2a.com/uploads/D1409013-9217-4F3B-AE37-52EF20A6CDD1/images/1cba3f5f-8f22-49b4-af0d-1f7d703b523a.webp" alt="Về chúng tôi" class="img-fluid about-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>Sứ mệnh & Tầm nhìn</h2>
+                <p class="lead">Những giá trị cốt lõi định hướng mọi hoạt động của chúng tôi</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>Sứ mệnh</h3>
+                        <p>Phát triển các giải pháp công nghệ tiên tiến giúp doanh nghiệp truy xuất nguồn gốc sản phẩm minh bạch, tuân thủ các quy định quốc tế và phát triển bền vững.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3>Tầm nhìn</h3>
+                        <p>Trở thành đơn vị hàng đầu tại Việt Nam về giải pháp truy xuất nguồn gốc và công nghệ phục vụ nông nghiệp bền vững vào năm 2030.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3>Giá trị cốt lõi</h3>
+                        <p>Đổi mới sáng tạo - Minh bạch - Bền vững - Hợp tác cùng phát triển.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <h2 class="mb-4">Tại sao chọn chúng tôi?</h2>
+
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <h4>Chuyên môn sâu</h4>
+                            <p>Đội ngũ kỹ sư giàu kinh nghiệm với kiến thức chuyên sâu về công nghệ blockchain và truy xuất nguồn gốc.</p>
+                        </div>
+                    </div>
+
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <h4>Giải pháp tuân thủ EUDR</h4>
+                            <p>Các giải pháp được thiết kế đặc biệt để đáp ứng các yêu cầu khắt khe của Quy định EU về Nông sản không phá rừng (EUDR).</p>
+                        </div>
+                    </div>
+
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <h4>Hỗ trợ 24/7</h4>
+                            <p>Đội ngũ hỗ trợ khách hàng luôn sẵn sàng giúp đỡ bạn mọi lúc, mọi nơi.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://bizweb.dktcdn.net/100/477/992/files/tieu-chuan-eudr-2.jpg?v=1743150717633" alt="Tại sao chọn chúng tôi" class="img-fluid about-img">
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

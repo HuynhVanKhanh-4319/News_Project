@@ -30,7 +30,9 @@
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <label asp-for="metaUrl" class="form-label">Meta URL</label>
+                    <label asp-for="metaUrl" class="form-label">
+                        Meta URL <span class="text-danger d-inline">*</span>
+                    </label>
                     <input asp-for="metaUrl" class="form-control" maxlength="200" required />
                 </div>
 

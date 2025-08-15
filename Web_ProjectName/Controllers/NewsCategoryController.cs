@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Google.Api;
+using Microsoft.AspNetCore.Mvc;
 using Web_ProjectName.Lib;
 using Web_ProjectName.Models;
 using Web_ProjectName.Services;
@@ -22,6 +23,24 @@ public class NewsCategoryController : Controller
         var result = await _s_NewsCategory.GetListByStatus(default, status);
         return Json(result);
     }
+
+    [HttpGet]
+    public IActionResult RenderCreateView()
+    {
+        return PartialView("_CreateNewsCategoryPartial", new EM_NewsCategory());
+    }
+    [HttpGet]
+    public IActionResult RenderUpdateView(int id)
+    {
+        var model = _s_NewsCategory.GetById(id);
+        if (model == null)
+            return NotFound();
+
+        return PartialView("_UpdateNewsCategoryPartial", model);
+    }
+      
+
+
     [HttpGet]
     public IActionResult Create()
     {
@@ -35,13 +54,8 @@ public class NewsCategoryController : Controller
         var res = await _s_NewsCategory.Create(default, model, createdBy.ToString());
         return Json(res);
     }
-    [HttpPost]
-    public async Task<IActionResult> UpdateStatus(int id)
-    {
-        var updatedBy = 0;
-        var result = await _s_NewsCategory.UpdateStatus(default, id, 0, updatedBy.ToString());
-        return Json(new { success = result != null});
-    }
+
+
     [HttpPost]
     public async Task<IActionResult> Update(EM_NewsCategory model)
     {
@@ -55,7 +69,13 @@ public class NewsCategoryController : Controller
         var res = await _s_NewsCategory.GetById(id);
         return Json(res);
     }
-
+    [HttpPost]
+    public async Task<IActionResult> UpdateStatus(int id)
+    {
+        var updatedBy = 0;
+        var result = await _s_NewsCategory.UpdateStatus(default, id, 0, updatedBy.ToString());
+        return Json(new { success = result != null });
+    }
 
 
 

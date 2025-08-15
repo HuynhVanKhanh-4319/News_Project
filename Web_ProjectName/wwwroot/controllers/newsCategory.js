@@ -1,15 +1,11 @@
 ﻿
 let dataTable;
-
-
 let $form_create_news_category;
 let $btn_toggle_form;
 let $btn_submit_create;
 let $btn_submit_update;
 let $newsCategoryTable_wrapper;
 let $create_form_container;
-
-
 const apiUrlGetList = '/NewsCategory/GetList';
 const apiUrlCreate = '/NewsCategory/Create';
 const apiUrlUpdate = '/NewsCategory/Update';
@@ -31,8 +27,8 @@ $(document).ready(function () {
   
     BindFormToggleEvents();
     BindCreateFormSubmit(dataTable);
-    bindDeleteNewsCategoryEvent(dataTable);
-    bindEditNewsCategoryEvent(dataTable);
+    BindDeleteNewsCategoryEvent(dataTable);
+    BindEditNewsCategoryEvent(dataTable);
 
    
     InitMaxlengthForm();
@@ -195,7 +191,7 @@ function BindCreateFormSubmit(table) {
 }
 
 
-function bindDeleteNewsCategoryEvent(table) {
+function BindDeleteNewsCategoryEvent(table) {
     $('#news_category_table').on('click', '.btn-delete', function () {
         const id = $(this).data('id');
         if (!id) return;
@@ -233,7 +229,7 @@ function bindDeleteNewsCategoryEvent(table) {
 }
 
 
-function bindEditNewsCategoryEvent(table) {
+function BindEditNewsCategoryEvent(table) {
     $('#news_category_table').on('click', '.btn-edit', function () {
         const id = $(this).data('id');
 

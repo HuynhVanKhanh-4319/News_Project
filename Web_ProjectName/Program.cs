@@ -88,6 +88,7 @@ builder.Services.AddSingleton<IS_News, S_News>();
 builder.Services.AddSingleton<IS_NewsCategory, S_NewsCategory>();
 builder.Services.AddSingleton<IS_PartnerList, S_PartnerList>();
 builder.Services.AddSingleton<IS_Banner, S_Banner>();
+builder.Services.AddSingleton<IS_Introduce, S_Introduce>();
 builder.Services.AddSingleton<IS_GoogleReCAPTCHA, S_GoogleReCAPTCHA>();
 
 
@@ -167,6 +168,10 @@ app.UseEndpoints(endpoints =>
         name: "NewsUser",
         pattern: "trang-tin-tuc",
         defaults: new { controller = "NewsUser", action = "Index" });
+    endpoints.MapControllerRoute(
+    name: "Contact",
+    pattern: "trang-lien-he",
+    defaults: new { controller = "Contact", action = "Index" });
 
     endpoints.MapControllerRoute(
        name: "Error page",

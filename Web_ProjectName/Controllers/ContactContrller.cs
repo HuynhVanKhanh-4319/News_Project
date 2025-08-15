@@ -7,31 +7,26 @@ using Web_ProjectName.Services;
 
 namespace Web_ProjectName.Controllers
 {
-    public class ContactContrller : Controller
+    public class ContactController : BaseController<ContactController>
     {
         private readonly IS_Contact _s_Contact;
-        public ContactContrller(IS_Contact s_Contact)
+        public ContactController(IS_Contact s_Contact)
         {
             _s_Contact = s_Contact;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
-        public async Task<IActionResult> Send(EM_Contact model, string tokenReCAPTCHA)
+        [HttpPost]
+        public async Task<IActionResult> CreateContact(EM_Contact model)
         {
-            M_JResult jResult = new M_JResult();
-
-
-            if (!ModelState.IsValid)
-            {
-                jResult.error = new error(0, DataAnnotationExtensionMethod.GetErrorMessage(ModelState));
-                return Json(jResult);
-            }
-            model.supplierId = 0;
-            model.status = 0;
-            var res = await _s_Contact.Create(model, default);
-            return Json(jResult.MapData(res));
+            var createdBy = 0;
+            model.status = 1;
+            var response = await _s_Contact.Create(model, createdBy.ToString());
+            return Json(response);
         }
+
     }
 }

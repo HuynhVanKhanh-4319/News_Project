@@ -26,14 +26,6 @@ namespace Web_ProjectName.Controllers
             ViewBag.HotNews = hotNews;
             return View();
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetHotNewsPartial()
-        {
-            var result = await _s_News.GetListByStatus(default, 1);
-            var hotNews = result?.data?.Where(n => n.isHot == false).ToList() ?? new List<M_News>();
-            return PartialView("_P_News_Hot", hotNews);
-        }
         [HttpGet]
         public async Task<IActionResult> GetList(int status = 1)
         {

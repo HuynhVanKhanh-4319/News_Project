@@ -23,11 +23,12 @@ function InitMaxLength(scope) {
         alwaysShow: true,
         warningClass: "badge bg-info",
         limitReachedClass: "badge bg-danger",
-        placement: 'bottom-right-inside',
+        appendToParent: true,    
         separator: ' / ',
         preText: 'Đã nhập ',
         postText: ' ký tự.',
-        validate: true
+        validate: true,
+        showOnReady: false 
     });
 }
 function EscapeHtml(text) {
@@ -46,13 +47,12 @@ function TruncateWithTooltip(text, maxLength = 20) {
     return `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${EscapeHtml(text)}">${EscapeHtml(truncated)}</span>`;
 }
 
-// Cấu hình Ajax cho bảng News
 const dataParamsNews = function () {
     $.fn.dataTable.ext.errMode = 'none';
     return {
         type: 'GET',
         url: '/News/GetList',
-        traditional: true, // Cho phép truyền array qua query string
+        traditional: true, 
         data: function (d) {
             d.status = [0, 1];
             d.categoryId = $('#filterCategory').val() || null;
@@ -70,7 +70,6 @@ const dataParamsNews = function () {
     };
 };
 
-// Cấu hình cột cho bảng News
 const columnNews = function () {
     return [
         {
@@ -118,7 +117,6 @@ const columnNews = function () {
     ];
 };
 
-// Hàm khởi tạo bảng News
 function InitNewsTable() {
     if (typeof newsTable !== "undefined" && newsTable) {
         newsTable.destroy();
@@ -130,7 +128,7 @@ function InitNewsTable() {
         processing: true,
         serverSide: false,
         scrollX: true,
-        responsive: false, // Giống NewsCategory
+        responsive: false, 
         autoWidth: true,
         order: [[0, 'asc']],
         ajax: dataParamsNews(),
@@ -139,7 +137,7 @@ function InitNewsTable() {
             url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/vi.json'
         },
         fixedColumns: {
-            left: 1 // Giống NewsCategory
+            left: 1
         },
         initComplete: function () {
             this.api().columns.adjust();
@@ -247,14 +245,8 @@ function HandleCreateNews() {
     $('#form_create_news').off('submit').on('submit', function (e) {
         e.preventDefault();
 
-        // Cập nhật nội dung CKEditor vào textarea
-        for (var instance in CKEDITOR.instances) {
-            CKEDITOR.instances[instance].updateElement();
-        }
 
         const formData = new FormData(this);
-
-        // Ghi đè lại isHot để đảm bảo giá trị đúng
         formData.set('isHot', $('#isHot').is(':checked') ? 'true' : 'false');
 
         $.ajax({

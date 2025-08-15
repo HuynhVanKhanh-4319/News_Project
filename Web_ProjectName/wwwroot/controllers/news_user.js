@@ -67,7 +67,6 @@ function RenderNewsCards(newsList) {
     return html;
 }
 
-
 function LoadNewsByCategory(status = 1, categoryName, containerSelector, title) {
     $.ajax({
         url: `/News/GetList?status=${status}`,

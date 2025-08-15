@@ -1,0 +1,157 @@
+﻿:root {
+    --primary-color: #d9230f;
+    --secondary-color: #333;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --gray-color: #6c757d;
+}
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    color: var(--secondary-color);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.bg-primary-custom {
+    background-color: var(--primary-color);
+}
+
+.text-primary-custom {
+    color: var(--primary-color);
+}
+
+.btn-primary-custom {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+    .btn-primary-custom:hover {
+        background-color: #21867a;
+        border-color: #21867a;
+    }
+
+.company-header {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1920x600') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.company-logo {
+    max-width: 200px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.about-section {
+    padding: 60px 0;
+}
+
+.about-img {
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.mission-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 30px;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+    .mission-card:hover {
+        transform: translateY(-10px);
+    }
+
+.mission-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.value-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.value-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
+.contact-info {
+    background-color: #f8f9fa;
+    padding: 40px;
+    border-radius: 8px;
+}
+
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    margin-right: 15px;
+}
+
+footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 40px 0;
+}
+
+.social-icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    margin-right: 10px;
+    color: white;
+    transition: all 0.3s;
+}
+
+    .social-icons a:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-3px);
+    }
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    .company-header {
+        padding: 60px 0;
+    }
+
+    .company-logo {
+        max-width: 150px;
+    }
+}
