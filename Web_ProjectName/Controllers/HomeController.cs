@@ -69,6 +69,38 @@ namespace Web_ProjectName.Controllers
             return Json(new M_JResult(res));
         }
 
-   
+        [HttpGet]
+        public IActionResult GetDataByTeam(string teamId)
+        {
+            var data = new List<object>();
+
+            if (teamId == "D1")
+            {
+                data = new List<object>
+                {
+                    new { name = "D1-C1", value = 1274.05 },
+                    new { name = "D1-C2", value = 1267.02 },
+                    new { name = "D1-C3", value = 3068.49 },
+                    new { name = "D1-C4", value = 2710.16 },
+                    new { name = "D1-C5", value = 1987.89 },
+                    new { name = "D1-C6", value = 1879.69 },
+                    new { name = "D1-C7", value = 4629.67 },
+                    new { name = "D1-C8", value = 3783.74 }
+                };
+            }
+            else if (teamId == "D2")
+            {
+                data = new List<object>
+                {
+                    new { name = "D2-C1", value = 1500 },
+                    new { name = "D2-C2", value = 2000 },
+                    new { name = "D2-C3", value = 1800 }
+                };
+            }
+
+            return Json(data);
+        }
+
+
     }
-    }
+}

@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Biểu đồ sản lượng";
+}
+
+<div class="container mt-4">
+    <h2>@ViewBag.Title</h2>
+
+    <div class="form-group">
+        <label for="team_Select">Chọn đội:</label>
+        <select id="team_Select" class="form-control" style="width: 200px;">
+            <option value="">-- Tất cả đội --</option>
+            <option value="D1">Đội 1</option>
+            <option value="D2">Đội 2</option>
+        </select>
+    </div>
+
+    <div id="chartcolum" class="mt-4"></div>
+</div>

@@ -174,6 +174,7 @@ function InitNewsTable() {
                     data: { id: id, status: newStatus },
                     success: function (res) {
                         if (res.success) {
+
                             Swal.fire('Thành công!', 'Trạng thái đã được cập nhật.', 'success');
                             newsTable.ajax.reload(null, false);
                         } else {
