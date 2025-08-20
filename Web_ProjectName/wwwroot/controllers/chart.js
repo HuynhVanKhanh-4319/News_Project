@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
     BindEvents();
-    RenderChart(); 
+    RenderChart();
 });
 function RenderChart(data) {
     let seriesData, labelsData, colors;
@@ -55,7 +55,7 @@ function GenerateColors(count) {
 
 function loadTeamData(teamId) {
     if (!teamId) {
-        RenderChart(); 
+        RenderChart();
         return;
     }
     $.ajax({

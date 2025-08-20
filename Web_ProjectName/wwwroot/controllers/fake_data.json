@@ -1,0 +1,296 @@
+{
+  "2023-2024": {
+    "dot1": {
+      "DakLak": [
+        {
+          "vung": "KRÔNG NĂNG",
+          "hoKhaoSat": 47,
+          "sanLuong": 108.8,
+          "namTrongTB": 2001
+        },
+        {
+          "vung": "KRÔNG ANA",
+          "hoKhaoSat": 9,
+          "sanLuong": 22.2,
+          "namTrongTB": 2015
+        },
+        {
+          "vung": "BUÔN HỒ",
+          "hoKhaoSat": 6,
+          "sanLuong": 7.1,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "EA HLEO",
+          "hoKhaoSat": 9,
+          "sanLuong": 40.2,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "BUÔN MA THUỘT",
+          "hoKhaoSat": 4,
+          "sanLuong": 7.1,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "BUÔN Đôn",
+          "hoKhaoSat": 2,
+          "sanLuong": 2.8,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "CƯ MGAR",
+          "hoKhaoSat": 9,
+          "sanLuong": 25.2,
+          "namTrongTB": 2012
+        }
+      ],
+      "GiaLai": [
+        {
+          "vung": "PLEIKU",
+          "hoKhaoSat": 12,
+          "sanLuong": 252.3,
+          "namTrongTB": 2005
+        },
+        {
+          "vung": "CHƯ SÊ",
+          "hoKhaoSat": 8,
+          "sanLuong": 330.5,
+          "namTrongTB": 2010
+        }
+      ]
+    },
+    "dot2": {
+      "DakLak": [
+        {
+          "vung": "KRÔNG NĂNG",
+          "hoKhaoSat": 47,
+          "sanLuong": 200.0,
+          "namTrongTB": 2001
+        },
+        {
+          "vung": "KRÔNG ANA",
+          "hoKhaoSat": 9,
+          "sanLuong": 20.0,
+          "namTrongTB": 2015
+        },
+        {
+          "vung": "BUÔN HỒ",
+          "hoKhaoSat": 6,
+          "sanLuong": 6.5,
+          "namTrongTB": 2012
+        }
+      ],
+      "GiaLai": [
+        {
+          "vung": "PLEIKU",
+          "hoKhaoSat": 12,
+          "sanLuong": 52.0,
+          "namTrongTB": 2005
+        },
+        {
+          "vung": "CHƯ SÊ",
+          "hoKhaoSat": 8,
+          "sanLuong": 35.0,
+          "namTrongTB": 2010
+        }
+      ]
+    }
+  },
+  "2024-2025": {
+    "dot1": {
+      "DakLak": [
+        {
+          "vung": "KRÔNG NĂNG",
+          "hoKhaoSat": 47,
+          "sanLuong": 191.3,
+          "namTrongTB": 2001
+        },
+        {
+          "vung": "KRÔNG ANA",
+          "hoKhaoSat": 9,
+          "sanLuong": 20.6,
+          "namTrongTB": 2015
+        },
+        {
+          "vung": "BUÔN HỒ",
+          "hoKhaoSat": 6,
+          "sanLuong": 6.8,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "EA HLEO",
+          "hoKhaoSat": 9,
+          "sanLuong": 41.1,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "BUÔN MA THUỘT",
+          "hoKhaoSat": 4,
+          "sanLuong": 7.5,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "BUÔN Đôn",
+          "hoKhaoSat": 2,
+          "sanLuong": 3.6,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "CƯ MGAR",
+          "hoKhaoSat": 9,
+          "sanLuong": 24.2,
+          "namTrongTB": 2012
+        }
+      ],
+      "GiaLai": [
+        {
+          "vung": "PLEIKU",
+          "hoKhaoSat": 12,
+          "sanLuong": 450.2,
+          "namTrongTB": 2005
+        },
+        {
+          "vung": "CHƯ SÊ",
+          "hoKhaoSat": 8,
+          "sanLuong": 333.1,
+          "namTrongTB": 2010
+        }
+      ]
+    },
+    "dot2": {
+      "DakLak": [
+        {
+          "vung": "KRÔNG NĂNG",
+          "hoKhaoSat": 47,
+          "sanLuong": 200.5,
+          "namTrongTB": 2001
+        },
+        {
+          "vung": "KRÔNG ANA",
+          "hoKhaoSat": 9,
+          "sanLuong": 21.2,
+          "namTrongTB": 2015
+        },
+        {
+          "vung": "BUÔN HỒ",
+          "hoKhaoSat": 6,
+          "sanLuong": 7.0,
+          "namTrongTB": 2012
+        }
+      ],
+      "GiaLai": [
+        {
+          "vung": "PLEIKU",
+          "hoKhaoSat": 12,
+          "sanLuong": 52.0,
+          "namTrongTB": 2005
+        },
+        {
+          "vung": "CHƯ SÊ",
+          "hoKhaoSat": 8,
+          "sanLuong": 34.0,
+          "namTrongTB": 2010
+        }
+      ]
+    }
+  },
+  "2025-2026": {
+    "dot1": {
+      "DakLak": [
+        {
+          "vung": "KRÔNG NĂNG",
+          "hoKhaoSat": 47,
+          "sanLuong": 208.8,
+          "namTrongTB": 2001
+        },
+        {
+          "vung": "KRÔNG ANA",
+          "hoKhaoSat": 9,
+          "sanLuong": 24.2,
+          "namTrongTB": 2015
+        },
+        {
+          "vung": "BUÔN HỒ",
+          "hoKhaoSat": 6,
+          "sanLuong": 8.1,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "EA HLEO",
+          "hoKhaoSat": 9,
+          "sanLuong": 45.2,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "BUÔN MA THUỘT",
+          "hoKhaoSat": 4,
+          "sanLuong": 8.1,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "BUÔN Đôn",
+          "hoKhaoSat": 2,
+          "sanLuong": 3.8,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "CƯ MGAR",
+          "hoKhaoSat": 9,
+          "sanLuong": 28.2,
+          "namTrongTB": 2012
+        }
+      ],
+      "GiaLai": [
+        {
+          "vung": "PLEIKU",
+          "hoKhaoSat": 12,
+          "sanLuong": 55.3,
+          "namTrongTB": 2005
+        },
+        {
+          "vung": "CHƯ SÊ",
+          "hoKhaoSat": 8,
+          "sanLuong": 36.5,
+          "namTrongTB": 2010
+        }
+      ]
+    },
+    "dot2": {
+      "DakLak": [
+        {
+          "vung": "KRÔNG NĂNG",
+          "hoKhaoSat": 47,
+          "sanLuong": 210.0,
+          "namTrongTB": 2001
+        },
+        {
+          "vung": "KRÔNG ANA",
+          "hoKhaoSat": 9,
+          "sanLuong": 25.0,
+          "namTrongTB": 2015
+        },
+        {
+          "vung": "BUÔN HỒ",
+          "hoKhaoSat": 6,
+          "sanLuong": 8.5,
+          "namTrongTB": 2012
+        }
+      ],
+      "GiaLai": [
+        {
+          "vung": "PLEIKU",
+          "hoKhaoSat": 12,
+          "sanLuong": 56.0,
+          "namTrongTB": 2005
+        },
+        {
+          "vung": "CHƯ SÊ",
+          "hoKhaoSat": 8,
+          "sanLuong": 37.0,
+          "namTrongTB": 2010
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Biểu đồ so sánh sản lượng";
+}
+<div class="row mb-3">
+    <div class="col-md-3">
+        <label for="yearBefore" class="form-label">Năm trước</label>
+        <select id="yearBefore" class="form-select">
+            <option value="">-- Chọn năm --</option>
+            <option value="2023-2024">2023-2024</option>
+            <option value="2024-2025">2024-2025</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="yearAfter" class="form-label">Năm sau</label>
+        <select id="yearAfter" class="form-select">
+            <option value="">-- Chọn năm --</option>
+            <option value="2024-2025">2024-2025</option>
+            <option value="2025-2026">2025-2026</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="dot" class="form-label">Đợt khảo sát</label>
+        <select id="dot" class="form-select">
+            <option value="">-- Chọn đợt --</option>
+            <option value="dot1">Đợt 1</option>
+            <option value="dot2">Đợt 2</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="province" class="form-label">Tỉnh</label>
+        <select id="province" class="form-select">
+            <option value="">-- Chọn tỉnh --</option>
+            <option value="DakLak">Đắk Lắk</option>
+            <option value="GiaLai">Gia Lai</option>
+        </select>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table id="reportTable" class="table table-bordered table-striped table-hover" style="width:100%">
+        <thead class="table-light">
+            <tr>
+                <th>STT</th>
+                <th>Vùng</th>
+                <th>Số hộ khảo sát</th>
+                <th id="colSau">Sản lượng vụ sau (tấn)</th>
+                <th id="colTruoc">Sản lượng vụ trước (tấn)</th>
+                <th>Sản lượng tăng/giảm (tấn)</th>
+                <th>Tỉ lệ % tăng/giảm</th>
+                <th>Năm trồng TB</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<div id="danhGia" class="alert alert-info mt-3"></div>
+<h2>@ViewBag.Title</h2>
+<div id="chart" class="mt-4"></div> 
