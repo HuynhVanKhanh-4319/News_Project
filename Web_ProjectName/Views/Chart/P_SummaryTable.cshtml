@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Biểu đồ so sánh sản lượng";
+    ViewBag.Title = "Biểu đồ so sánh sản lượng cà phê";
 }
 <div class="row mb-3">
     <div class="col-md-3">
@@ -43,17 +43,27 @@
                 <th>STT</th>
                 <th>Vùng</th>
                 <th>Số hộ khảo sát</th>
-                <th id="colSau">Sản lượng vụ sau (tấn)</th>
-                <th id="colTruoc">Sản lượng vụ trước (tấn)</th>
+                <th id="colSau">Sản lượng vụ  (tấn)</th>
+                <th id="colTruoc">Sản lượng vụ  (tấn)</th>
                 <th>Sản lượng tăng/giảm (tấn)</th>
                 <th>Tỉ lệ % tăng/giảm</th>
                 <th>Năm trồng TB</th>
             </tr>
         </thead>
         <tbody></tbody>
+        <tfoot>
+            <tr>
+                <th colspan="2" class="text-center"><b>TỔNG CỘNG</b></th>
+                <th id="tongHoKhaoSat">0</th>
+                <th id="tongSau">0</th>
+                <th id="tongTruoc">0</th>
+                <th id="tongTangGiam">0</th>
+                <th id="tongTile">0%</th>
+                <th></th>
+            </tr>
+        </tfoot>
     </table>
 </div>
-
 <div id="danhGia" class="alert alert-info mt-3"></div>
 <h2>@ViewBag.Title</h2>
 <div id="chart" class="mt-4"></div> 

@@ -1,44 +1,36 @@
 ﻿let reportTable;
-let chart; 
+let chart;
 
 $(document).ready(function () {
     BindEvents();
 });
 function BindEvents() {
     $("#yearBefore, #yearAfter, #dot, #province").change(function () {
-        const namTruoc = $("#yearBefore").val();
-        const namSau = $("#yearAfter").val();
-        const dot = $("#dot").val(); 
-        const tinh = $("#province").val();
+        const filter = {
+            namTruoc: $("#yearBefore").val(),
+            namSau: $("#yearAfter").val(),
+            dot: $("#dot").val(),
+            tinh: $("#province").val()
+        };
 
-        LoadReportTable(namTruoc, namSau, dot, tinh);
+        LoadReportTable(filter);
     });
 }
 
-function LoadReportTable(namTruoc, namSau, dot, tinh) {
-    if (namSau) {
-        $("#colSau").text(`Sản lượng ${namSau} (tấn)`);
-    } else {
-        $("#colSau").text("Sản lượng vụ sau (tấn)");
-    }
+function LoadReportTable(filter) {
+    const { namTruoc, namSau } = filter;
+    $("#colSau").text(namSau ? `Sản lượng vụ ${namSau} (tấn)` : "Sản lượng vụ  (tấn)");
+    $("#colTruoc").text(namTruoc ? `Sản lượng cùng kỳ vụ ${namTruoc} (tấn)` : "Sản lượng vụ cùng kỳ vụ (tấn)");
 
-    if (namTruoc) {
-        $("#colTruoc").text(`Sản lượng ${namTruoc} (tấn)`);
-    } else {
-        $("#colTruoc").text("Sản lượng vụ trước (tấn)");
-    }
     $.ajax({
         url: "/controllers/fake_data.json",
         method: "GET",
-        data: { namTruoc, namSau, dot, tinh },
+        data: filter,
         dataType: "json",
         success: function (res) {
             let data = [];
-
-            if (namTruoc && namSau && dot && tinh && res) {
-
-                data = compareData(res, namTruoc, namSau, dot, tinh);
-
+            if (filter.namTruoc && filter.namSau && filter.dot && filter.tinh && res) {
+                data = compareData(res, filter);
                 let tong = { hoKhaoSat: 0, sanLuongSau: 0, sanLuongTruoc: 0, tangGiam: 0 };
                 data.forEach(item => {
                     tong.hoKhaoSat += item.hoKhaoSat;
@@ -50,30 +42,20 @@ function LoadReportTable(namTruoc, namSau, dot, tinh) {
                 const tileTong = tong.sanLuongTruoc
                     ? ((tong.tangGiam / tong.sanLuongTruoc) * 100).toFixed(2)
                     : 0;
-                data.push({
-                    vung: "<b>TỔNG CỘNG</b>",
-                    hoKhaoSat: `<b>${tong.hoKhaoSat}</b>`,
-                    sanLuongSau: `<b>${tong.sanLuongSau.toFixed(2)}</b>`,
-                    sanLuongTruoc: `<b>${tong.sanLuongTruoc.toFixed(2)}</b>`,
-                    tangGiam: `<b>${tong.tangGiam.toFixed(2)}</b>`,
-                    tile: `<b>${tileTong}%</b>`,
-                    namTrongTB: ""
-                });
 
-                let danhGia = `Đánh giá tổng thể: Qua kết quả khảo sát tại các nông hộ ở nhiều vùng cho thấy, niên vụ ${namSau} sản lượng cà phê ` +
+                let danhGia = `Đánh giá tổng thể: Qua kết quả khảo sát tại các nông hộ ở nhiều vùng cho thấy, niên vụ ${filter.namSau} sản lượng cà phê ` +
                     (tileTong > 0 ? `dự kiến sẽ tăng khoảng ${tileTong}%` : `dự kiến sẽ giảm khoảng ${Math.abs(tileTong)}%`) +
                     `. Giá cà phê duy trì ở mức cao đã thúc đẩy người dân mạnh dạn đầu tư hơn vào cây cà phê. Tuy nhiên, một số vườn vẫn bị rệp sáp gây hại và chưa được xử lý kịp thời, một số vườn có hiện tượng ra hoa gặp mưa nên bị ảnh hưởng đến sản lượng.`;
+
                 $("#danhGia").text(danhGia);
 
-                renderChart(data, namTruoc, namSau);
+                renderChart(data, filter);
             }
 
             renderReportTable(data);
         },
-        error: function (xhr, status, error) {
+        error: function () {
             ShowToastNoti('warning', '', 'Lỗi khi gọi API!');
-            console.error("Lỗi khi load dữ liệu:", error);
-
             renderReportTable([]);
             $("#danhGia").text("");
         }
@@ -107,6 +89,23 @@ function renderReportTable(data) {
         initComplete: function () {
             this.api().columns.adjust();
             $(window).trigger('resize');
+        },
+        footerCallback: function (row, data) {
+            let tongHoKhaoSat = 0, tongSau = 0, tongTruoc = 0, tongTangGiam = 0;
+
+            data.forEach(item => {
+                tongHoKhaoSat += +item.hoKhaoSat || 0;
+                tongSau += +item.sanLuongSau || 0;
+                tongTruoc += +item.sanLuongTruoc || 0;
+                tongTangGiam += +item.tangGiam || 0;
+            });
+
+            let tile = tongTruoc ? ((tongTangGiam / tongTruoc) * 100).toFixed(2) : 0;
+            $('#tongHoKhaoSat').html(`<b>${tongHoKhaoSat}</b>`);
+            $('#tongSau').html(`<b>${tongSau.toFixed(2)}</b>`);
+            $('#tongTruoc').html(`<b>${tongTruoc.toFixed(2)}</b>`);
+            $('#tongTangGiam').html(`<b>${tongTangGiam.toFixed(2)}</b>`);
+            $('#tongTile').html(`<b>${tile}%</b>`);
         }
     });
 
@@ -132,7 +131,8 @@ const columnReport = function () {
     ];
 };
 
-function compareData(apiData, namTruoc, namSau, dot, tinh) {
+function compareData(apiData, filter) {
+    const { namTruoc, namSau, dot, tinh } = filter;
     const truoc = apiData[namTruoc][dot][tinh];
     const sau = apiData[namSau][dot][tinh];
 
@@ -151,54 +151,68 @@ function compareData(apiData, namTruoc, namSau, dot, tinh) {
             namTrongTB: item.namTrongTB
         };
     });
-}
+}   
 
-function renderChart(data, namTruoc, namSau) {
-    let chartData = data.filter(d => !d.vung.includes("TỔNG CỘNG"));
+function renderChart(data, filter) {
+    const { namTruoc, namSau } = filter;
+    let sanluongTruoc = data.map(d => d.sanLuongTruoc);
+    let sanluongSau = data.map(d => d.sanLuongSau);
+    let tanggiam = data.map(d => d.tile);
+    let maxValue = Math.max(...sanluongTruoc, ...sanluongSau);
+    let tanggiamScaled = tanggiam.map(v => v * (maxValue / 100));
 
-    let categories = chartData.map(d => d.vung);
-    let seriesSau = chartData.map(d => d.sanLuongSau);
-    let seriesTruoc = chartData.map(d => d.sanLuongTruoc);
-    let seriesTangGiam = chartData.map(d => d.tangGiam);
-
+    if (!data || data.length === 0) {
+        if (chart) chart.updateOptions({ series: [] });
+        return;
+    }
     let options = {
-        series: chartData.length > 0 ? [
-            { name: `Sản lượng ${namSau}`, data: seriesSau },
-            { name: `Sản lượng ${namTruoc}`, data: seriesTruoc },
-            { name: 'Sản lượng tăng/giảm (tấn)', data: seriesTangGiam }
-        ] : [],
-        chart: { type: 'bar', height: 400 },
-        plotOptions: {
-            bar: {
-                columnWidth: '80%',
-                dataLabels: { position: 'top' }
+        chart: { height: 400, type: "line" },
+        series: [
+            { name: `Sản lượng ${namTruoc}`, type: "column", data: sanluongTruoc },
+            { name: `Sản lượng ${namSau}`, type: "column", data: sanluongSau },
+            { name: "% Tỉ lệ tăng/giảm sản lượng giữa 2 mùa vụ cùng kỳ ", type: "line", data: tanggiamScaled }
+        ],
+        stroke: { width: [0, 0, 3] },
+        dataLabels: {
+            enabled: true,
+            enabledOnSeries: [2],
+            formatter: (val, opts) => {
+                if (opts.seriesIndex === 2) {
+                    return tanggiam[opts.dataPointIndex] + "%";
+                }
+                return val.toFixed(2);
             }
         },
-        dataLabels: {
-            enabled: chartData.length > 0, 
-            formatter: function (val) { return val; },
-            offsetY: -25,
-            style: { fontSize: '10px', colors: ["#304758"] }
-        },
-        yaxis: { title: { text: 'Sản lượng (tấn)' } },
-        xaxis: {
-            type: 'category',
-            categories: categories,
-            labels: { rotate: -90 }
-        },
-        noData: {
-            text: "Chưa có dữ liệu để hiển thị",
-            align: 'center',
-            verticalAlign: 'middle',
-            style: { fontSize: '14px' }
+        labels: data.map(d => d.vung),
+        yaxis: [
+            {
+                title: { text: "Sản lượng (tấn)" },
+                labels: {
+                    formatter: val => val.toFixed(2)
+                }
+            }
+        ],
+        tooltip: {
+            y: {
+                formatter: (val, opts) => {
+                    if (opts.seriesIndex === 2) {
+                        return tanggiam[opts.dataPointIndex] + "%";
+                    }
+                    return val.toFixed(1);
+                }
+            }
         }
     };
 
     if (chart) {
-        chart.updateOptions(options);
+        chart.updateOptions(options, true, true);
     } else {
         chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
     }
 }
+
+
+
+
 

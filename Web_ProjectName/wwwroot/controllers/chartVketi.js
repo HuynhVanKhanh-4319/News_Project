@@ -1,12 +1,12 @@
 ﻿
 let chart;
-
 $(document).ready(function () {
     InitDatepicker();
     InitDefaultDate();
     BindEvents();
     LoadData();
 });
+
 function InitDatepicker() {
     $(".datepicker").datepicker({
         format: "yyyy-mm-dd", 

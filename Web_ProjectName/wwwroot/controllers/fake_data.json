@@ -145,6 +145,18 @@
       ],
       "GiaLai": [
         {
+          "vung": "EA HLEO",
+          "hoKhaoSat": 9,
+          "sanLuong": 41.1,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "BUÔN MA THUỘT",
+          "hoKhaoSat": 4,
+          "sanLuong": 7.5,
+          "namTrongTB": 2012
+        },
+        {
           "vung": "PLEIKU",
           "hoKhaoSat": 12,
           "sanLuong": 450.2,
@@ -155,6 +167,18 @@
           "hoKhaoSat": 8,
           "sanLuong": 333.1,
           "namTrongTB": 2010
+        },
+        {
+          "vung": "KRÔNG NĂNG",
+          "hoKhaoSat": 47,
+          "sanLuong": 191.3,
+          "namTrongTB": 2001
+        },
+        {
+          "vung": "KRÔNG ANA",
+          "hoKhaoSat": 9,
+          "sanLuong": 20.6,
+          "namTrongTB": 2015
         }
       ]
     },
@@ -243,6 +267,18 @@
       ],
       "GiaLai": [
         {
+          "vung": "EA HLEO",
+          "hoKhaoSat": 9,
+          "sanLuong": 45.2,
+          "namTrongTB": 2012
+        },
+        {
+          "vung": "BUÔN MA THUỘT",
+          "hoKhaoSat": 4,
+          "sanLuong": 8.1,
+          "namTrongTB": 2012
+        },
+        {
           "vung": "PLEIKU",
           "hoKhaoSat": 12,
           "sanLuong": 55.3,
@@ -253,6 +289,18 @@
           "hoKhaoSat": 8,
           "sanLuong": 36.5,
           "namTrongTB": 2010
+        },
+        {
+          "vung": "KRÔNG NĂNG",
+          "hoKhaoSat": 47,
+          "sanLuong": 208.8,
+          "namTrongTB": 2001
+        },
+        {
+          "vung": "KRÔNG ANA",
+          "hoKhaoSat": 9,
+          "sanLuong": 24.2,
+          "namTrongTB": 2015
         }
       ]
     },
