@@ -89,6 +89,7 @@ function LoadTeamDataColum(teamId) {
         dataType: "json",
         success: function (res) {
             if (res.error) {
+                ShowToastNoti('warning','', 'Lỗi không thể load');
                 console.error("API error:", res.error);
                 RenderChartColum([]);
                 return;

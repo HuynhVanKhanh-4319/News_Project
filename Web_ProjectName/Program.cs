@@ -90,6 +90,7 @@ builder.Services.AddSingleton<IS_PartnerList, S_PartnerList>();
 builder.Services.AddSingleton<IS_Banner, S_Banner>();
 builder.Services.AddSingleton<IS_Introduce, S_Introduce>();
 builder.Services.AddSingleton<IS_GoogleReCAPTCHA, S_GoogleReCAPTCHA>();
+builder.Services.AddSingleton<IS_TransportMaterial, S_TransportMaterial>();
 
 
 builder.Services.Configure<Config_ApiSettings>(builder.Configuration.GetSection("ApiSettings"));

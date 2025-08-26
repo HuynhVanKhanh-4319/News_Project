@@ -203,7 +203,7 @@ function renderChart(data, filter) {
             }
         }
     };
-
+    
     if (chart) {
         chart.updateOptions(options, true, true);
     } else {

@@ -1,0 +1,54 @@
+﻿
+<div class="modal modal-pos fade" id="modal_import_excel">
+    <div class="modal-dialog">
+        <div class="modal-content border-0">
+            <div class="card">
+                <div class="card-body p-0">
+                    <form id="form_import" asp-antiforgery="true" enctype="multipart/form-data">
+                        <div class="modal-header align-items-center">
+                            <h5 class="modal-title d-flex align-items-end">
+                                <span class="lh-1">IMPORT DANH SÁCH</span>
+                            </h5>
+                            <a href="#" data-bs-dismiss="modal" class="ms-auto btn-close"></a>
+                        </div>
+                        <div class="modal-body">
+                            <input id="fileExcel" name="file" type="file" data-plugins="dropify"
+                                   accept=".xlsx, .xls" data-height="100"
+                                   data-allowed-file-extensions="xlsx xls" data-max-file-size="10M" />
+
+                            <p class="mb-1 mt-2 remark_warning">
+                                ✻ Tải về mẫu danh sách
+                                <a href="/template/import_excel_template.xlsx"
+                                   download="import_excel_template.xlsx" title="Tải mẫu">
+                                    <i class="fa fa-download fa-lg"></i>
+                                </a>
+                            </p>
+                            <p class="mb-1 mt-2 remark_warning">✻ Tệp tải lên tối đa 10 MB.</p>
+
+                            <div class="mt-3">
+                                <label for="isEudrSelect" class="form-label">Loại dữ liệu</label>
+                                <select id="isEudrSelect" class="form-select">
+                                    <option value="false">Không EUDR</option>
+                                    <option value="true">Có EUDR</option>
+                                </select>
+                                <input type="hidden" name="isEudr" id="isEudrHidden" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default w-100px" data-bs-dismiss="modal">Hủy</button>
+                            <button type="submit" id="btnImport" class="btn btn-theme w-100px" dir="ltr" data-style="zoom-in">
+                                Xử lý
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-arrow">
+                    <div class="card-arrow-top-left"></div>
+                    <div class="card-arrow-top-right"></div>
+                    <div class="card-arrow-bottom-left"></div>
+                    <div class="card-arrow-bottom-right"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
